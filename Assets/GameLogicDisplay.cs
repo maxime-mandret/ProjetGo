@@ -2,6 +2,7 @@
 using Assets.ObjetsDeJeu;
 using UnityEngine;
 using System.Collections;
+using Assets.GameUtils;
 
 enum GameTypes
 {
@@ -10,7 +11,7 @@ enum GameTypes
 	IAcIA
 }
 
-public class GameLogic : MonoBehaviour
+public class GameLogicDisplay : MonoBehaviour
 {
 	// Use this for initialization
 	public float casesEcart = 0.17f;
@@ -20,12 +21,14 @@ public class GameLogic : MonoBehaviour
     public const float coolTime = 1f;
     public float downTime;
     public bool updateLock;
+	private UnityUiMananger ui;
 
 	void Start()
 	{
 		if (initPos == null) {
 				initPos = new Vector3 (0.7040288f, 0.6923118f, 1.020664f);
 		}
+		this.ui = new UnityUiMananger ();
 		GameObject initialPet = GameObject.Find("TheGoban");
 		//INIT THE GRID
 		//TODO remplacer 9 avec Goban.length
@@ -36,7 +39,6 @@ public class GameLogic : MonoBehaviour
 				var pos = new Vector3((initPos.x - (casesEcart * i)), (initPos.y - (casesEcart * j)), initPos.z);
 				var unecase = (GameObject)Object.Instantiate(uneCase, initialPet.transform.position, Quaternion.identity);
 				unecase.name = "inter_" + i + "_" + j;
-				unecase.AddComponent(typeof(Case));
 				unecase.transform.parent = initialPet.transform;
 				unecase.transform.localPosition = pos;
 			}
@@ -72,6 +74,28 @@ public class GameLogic : MonoBehaviour
 				updateLock = false;
 				downTime = coolTime;
 
+//				DEBUG on liste le nombre d'intersections par groupe
+//				foreach(Groupe gr in Game.Goban.Groupes)
+//				{
+//					Debug.Log(gr.Count);
+//				}
+//				Debug.Log("--------");
+			}
+		}
+
+		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		RaycastHit hit;
+		if (Physics.Raycast(ray, out hit))
+		{
+			if(hit.collider.gameObject.tag == "case" && hit.collider.transform.childCount > 0)
+			{
+				ui.DisplayToolTip (hit.collider.name);
+			}else
+			{
+				if(ui.IsToolTipDisplayed())
+				{
+					ui.HideToolTip();
+				}
 			}
 		}
 

@@ -1,19 +1,17 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\StopOnCollision.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\GameUtils\UnityUiMananger.cs">
     <Files>
-      <File FileName="Assets\GameLogic.cs" Line="78" Column="50" />
-      <File FileName="Assets\StopOnCollision.cs" Line="29" Column="1" />
+      <File FileName="Assets\ObjetsDeJeu\Goban.cs" Line="118" Column="31" />
+      <File FileName="Assets\GameUtils\IUiManager.cs" Line="10" Column="1" />
+      <File FileName="Assets\GameUtils\UnityUiMananger.cs" Line="41" Column="28" />
+      <File FileName="Assets\GameLogicDisplay.cs" Line="91" Column="5" />
+      <File FileName="Assets\Case.cs" Line="5" Column="2" />
+      <File FileName="Assets\TitleIntro.cs" Line="27" Column="79" />
+      <File FileName="Assets\ObjetsDeJeu\Intersection.cs" Line="9" Column="2" />
+      <File FileName="Assets\PlayerLogic.cs" Line="31" Column="1" />
+      <File FileName="Assets\StopOnCollision.cs" Line="24" Column="24" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="Assembly-CSharp" expanded="True">
-            <Node name="stopOnCollision.cs" selected="True" />
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

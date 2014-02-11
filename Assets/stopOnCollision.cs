@@ -3,7 +3,7 @@ using System.Collections;
 
 public class StopOnCollision : MonoBehaviour
 {
-
+	public Color baseCouleur;
 	// Use this for initialization
 	void Start()
 	{
@@ -16,6 +16,15 @@ public class StopOnCollision : MonoBehaviour
 	
 	}
 
+	public void Select()
+	{
+		this.renderer.material.color = Color.green;
+	}
+
+	public void Deselect()
+	{
+		this.renderer.material.color = this.baseCouleur;
+	}
 
 	void OnCollisionEnter(Collision col)
 	{

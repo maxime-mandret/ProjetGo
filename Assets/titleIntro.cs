@@ -24,7 +24,7 @@ public class TitleIntro : MonoBehaviour
 				guiText.color = new Color(guiText.color.r, guiText.color.g, guiText.color.b, (guiText.color.a - (Time.deltaTime)));
 			} else
 			{
-				var tepu = GameObject.Find("Game Logic").GetComponent<GameLogic>();
+				var tepu = GameObject.Find("Game Logic").GetComponent<GameLogicDisplay>();
                 tepu.Game.Update();
 				Destroy(gameObject);
 			}

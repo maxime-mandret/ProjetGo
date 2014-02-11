@@ -134,7 +134,7 @@ namespace Assets.ObjetsDeJeu
 			var friends = GetAround(target).FindAll(i => i.Owner == target.Owner);
 
 			Groupe g = new Groupe {target};
-
+			this.Groupes.Add (g);
 			foreach(var fr in friends)
 			{
 				GetGroupe(fr).AddRange(GetGroupe(target));

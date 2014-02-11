@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class NextTurn : MonoBehaviour
@@ -18,6 +18,6 @@ public class NextTurn : MonoBehaviour
 
 	void OnMouseDown()
 	{
-		GameObject.Find("Game Logic").GetComponent<GameLogic>().Game.Update();
+		GameObject.Find("Game Logic").GetComponent<GameLogicDisplay>().Game.Update();
 	}
 }
