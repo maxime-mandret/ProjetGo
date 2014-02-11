@@ -14,6 +14,9 @@ namespace Assets.GameLogic
         public int NbTour { get; set; }
         public string Status { get; set; }
         private IUiManager UIManager;
+		private ScoreCalculator _scalc;
+		public double WhiteScore { get; set; }
+		public double BlackScore { get; set; }
 		
 		public Game(int size, Player whitePlayer, Player blackPlayer)
 		{
@@ -23,12 +26,13 @@ namespace Assets.GameLogic
 			this.BlackPlayer = blackPlayer;
 			this.CurrentPlayer = WhitePlayer;
 			this.Status = "playing";
+			_scalc = new ScoreCalculator ();
 		}
 		
 		public void PasserTour()
 		{
 			this.CurrentPlayer.NbAbandonSuccessifs++;
-			if(CurrentPlayer.NbAbandonSuccessifs >= 2)
+			if(_whitePlayer.NbAbandonSuccessifs >= 1 && _blackPlayer.NbAbandonSuccessifs >= 1)
 			{
 				EndGame();
 			} else
@@ -39,6 +43,10 @@ namespace Assets.GameLogic
 		}
 		public void EndGame()
 		{
+
+			_scalc.CalculateFinalScore (this.Goban,_whitePlayer,_blackPlayer);
+			this.BlackScore = _scalc.BlackFinalScore;
+			this.WhiteScore = _scalc.WhiteFinalScore;
 			this.Status = "over";
 		}
 		public void Update()
@@ -56,7 +64,7 @@ namespace Assets.GameLogic
 					{
 						c = player.GetBestMove(this.Goban);
 						nbEssais++;
-					} while (!Goban.CanPlay(c.X, c.Y) && nbEssais <= 10);
+					} while (!Goban.CanPlay(c.X, c.Y) && nbEssais <= 5);
 
 					if(!Goban.CanPlay(c.X, c.Y))
 					{

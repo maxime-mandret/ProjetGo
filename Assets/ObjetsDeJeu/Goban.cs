@@ -7,7 +7,7 @@ namespace Assets.ObjetsDeJeu
 	{
 		private Intersection[,] _cases;
 		private Stack<Move> _moveList;
-		private int _size;
+		public int Size{ get; set;}
 		private IList<Groupe> _groupes;
 
 	    public Goban() : this(9)
@@ -16,14 +16,14 @@ namespace Assets.ObjetsDeJeu
 
 		public Goban(int size)
 		{
-			_size = size;
+			Size = size;
 			_moveList = new Stack<Move>();
 			this._groupes = new List<Groupe>();
 			_cases = new Intersection[size, size];
 
-			for(int x = 0; x < _size; x++)
+			for(int x = 0; x < Size; x++)
 			{
-				for(int y = 0; y < _size; y++)
+				for(int y = 0; y < Size; y++)
 				{
 					_cases[x, y] = new Intersection {Owner = null, Coord = new Coordonnees(x, y)};
 				}
@@ -50,7 +50,7 @@ namespace Assets.ObjetsDeJeu
 			return IsInRange(inter.Coord.X + 1, inter.Coord.Y) ? this[inter.Coord.X + 1, inter.Coord.Y] : null;
 		}
 
-		List<Intersection> GetAround(Intersection inter)
+		public List<Intersection> GetAround(Intersection inter)
 		{
 			var l = new List<Intersection> {GetNorth(inter), GetWest(inter), GetSouth(inter), GetEast(inter)};
 			return l.FindAll(i => i != null);
@@ -103,11 +103,6 @@ namespace Assets.ObjetsDeJeu
 
 		public Intersection this[int x, int y] {
 			get { return _cases[x, y]; }
-		}
-
-		public int Size {
-			get { return _size; }
-			private set { _size = value; }
 		}
 
 		public Stack<Move> MoveList {

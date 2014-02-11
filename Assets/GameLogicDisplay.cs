@@ -18,8 +18,8 @@ public class GameLogicDisplay : MonoBehaviour
     public Vector3 initPos;
     public GameObject uneCase;
     public Game Game { get; set; }
-    public const float coolTime = 1f;
-    public float downTime;
+    public float coolTime;
+    private float downTime;
     public bool updateLock;
 	private UnityUiMananger ui;
 
@@ -99,10 +99,19 @@ public class GameLogicDisplay : MonoBehaviour
 			}
 		}
 
-		if(Game.Status == "over")
+		if(Game.Status == "over" && !GameObject.Find("GameOver").guiText.enabled)
 		{
 			GameObject.Find("GameOver").guiText.enabled = true;
+			GameObject.Find("lescore").guiText.text = string.Format("Score blanc : {0} - Score noir : {1}",this.Game.WhiteScore,this.Game.BlackScore);
+			GameObject.Find("lescore").guiText.enabled = true;
 		}
+
+		if(Game.Status == "calculated")
+		{
+			//GameObject.Find("GameOver").guiText.enabled = true;
+			Debug.Log(string.Format("score blanc : {0} score noir : {1}",Game.WhiteScore,Game.BlackScore));
+		}
+
 
 	}
 	public void UpdateReal()
