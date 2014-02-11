@@ -13,13 +13,13 @@ enum GameTypes
 public class GameLogic : MonoBehaviour
 {
 	// Use this for initialization
-	private float casesEcart = 0.17f;
-    private Vector3 initPos;
-    private GameObject uneCase;
+	public float casesEcart = 0.17f;
+    public Vector3 initPos;
+    public GameObject uneCase;
     public Game Game { get; set; }
-    private float coolTime = 1f;
-	private float downTime;
-	private bool updateLock;
+    public const float coolTime = 1f;
+    public float downTime;
+    public bool updateLock;
 
 	void Start()
 	{
@@ -31,8 +31,8 @@ public class GameLogic : MonoBehaviour
 		{
 			for(int j = 0; j<9; j++)
 			{
-				Vector3 pos = new Vector3((initPos.x - (casesEcart * i)), (initPos.y - (casesEcart * j)), initPos.z);
-				GameObject unecase = (GameObject)GameObject.Instantiate(uneCase, initialPet.transform.position, Quaternion.identity);
+				var pos = new Vector3((initPos.x - (casesEcart * i)), (initPos.y - (casesEcart * j)), initPos.z);
+				var unecase = (GameObject)Object.Instantiate(uneCase, initialPet.transform.position, Quaternion.identity);
 				unecase.name = "inter_" + i + "_" + j;
 				unecase.AddComponent(typeof(Case));
 				unecase.transform.parent = initialPet.transform;
@@ -79,7 +79,7 @@ public class GameLogic : MonoBehaviour
 		}
 
 	}
-	public void updateReal()
+	public void UpdateReal()
 	{
 		updateLock = true;
 	}

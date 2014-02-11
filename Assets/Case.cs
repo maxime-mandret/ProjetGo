@@ -21,7 +21,7 @@ public class Case : MonoBehaviour
 		if(other.gameObject.name == "pion")
 		{
 			Destroy(gameObject);
-			GameObject.Find("Game Logic").GetComponent<GameLogic>().updateReal();
+			GameObject.Find("Game Logic").GetComponent<GameLogic>().UpdateReal();
 		}
 	}
 }
