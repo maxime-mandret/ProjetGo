@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class stopOnCollision : MonoBehaviour
+public class StopOnCollision : MonoBehaviour
 {
 
 	// Use this for initialization

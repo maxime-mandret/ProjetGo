@@ -23,7 +23,9 @@ public class GameLogic : MonoBehaviour
 
 	void Start()
 	{
-
+		if (initPos == null) {
+				initPos = new Vector3 (0.7040288f, 0.6923118f, 1.020664f);
+		}
 		GameObject initialPet = GameObject.Find("TheGoban");
 		//INIT THE GRID
 		//TODO remplacer 9 avec Goban.length

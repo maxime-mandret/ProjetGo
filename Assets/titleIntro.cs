@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class titleIntro : MonoBehaviour
+public class TitleIntro : MonoBehaviour
 {
 	// Use this for initialization
-    private float _timeLeft;
-    private float _fadeTime;
-	private Font _dafont;
+    public float _timeLeft;
+    public float _fadeTime;
+	public Font _dafont;
 
 	void Start()
 	{
