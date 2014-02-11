@@ -8,10 +8,11 @@ namespace Assets.GameUtils
 {
     public class UnityUiMananger : IUiManager
     {
-		private bool isToolTipDisplayed = false;
+		private bool _isToolTipDisplayed = false;
+		private Player _tooltipLock;
 
 		public bool IsToolTipDisplayed(){
-			return this.isToolTipDisplayed;
+			return this._isToolTipDisplayed;
 		}
 
         public void PoserPion(Player p, int x, int y)
@@ -35,6 +36,10 @@ namespace Assets.GameUtils
 				Intersection i = gobin [x, y];
 				List<Groupe> g = (List<Groupe>)gobin.Groupes;
 				Groupe leGroupe = g.Find (gr => gr.Contains (i));
+				if (i.Owner != _tooltipLock) {
+					this.HideToolTip();
+				}
+				_tooltipLock = i.Owner;
 				if(leGroupe != null)
 				{
 					foreach (Intersection inter in leGroupe) {
@@ -43,7 +48,7 @@ namespace Assets.GameUtils
 							GameObject.Find (String.Format ("inter_{0}_{1}", inter.Coord.X, inter.Coord.Y)).transform.GetChild (0).GetComponent<StopOnCollision> ().Select ();
 						}
 					}
-					isToolTipDisplayed = true;
+					_isToolTipDisplayed = true;
 				}
 
 		}
@@ -60,7 +65,7 @@ namespace Assets.GameUtils
 					}
 				}
 			}
-			isToolTipDisplayed = false;
+			_isToolTipDisplayed = false;
 		}
     }
 }
