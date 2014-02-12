@@ -2,6 +2,7 @@
 using Assets.GameUtils;
 using Assets.GameUtils.Sgf;
 using Assets.ObjetsDeJeu;
+using UnityEngine;
 
 namespace Assets.GameLogic
 {
@@ -51,7 +52,7 @@ namespace Assets.GameLogic
 		}
 		public void Update()
 		{
-
+			Debug.Log(((_currPlayer == _blackPlayer)?"Black":"White")+" turn");
 			if(this.Status != "over")
 			{
 				//Si il y a des randoms IA on les fait jouer !!!
@@ -64,7 +65,7 @@ namespace Assets.GameLogic
 					{
 						c = player.GetBestMove(this.Goban);
 						nbEssais++;
-					} while (!Goban.CanPlay(c.X, c.Y) && nbEssais <= 5);
+					} while (!Goban.CanPlay(c.X, c.Y) && nbEssais <= 3);
 
 					if(!Goban.CanPlay(c.X, c.Y))
 					{
@@ -97,8 +98,8 @@ namespace Assets.GameLogic
 			if(this.Goban.CanPlay(x, y))
 			{
 				this.Goban.PutRock(CurrentPlayer, x, y);
-                this.ChangeCurrentPlayer();
 			    this.UIManager.PoserPion(CurrentPlayer, x, y);
+				this.ChangeCurrentPlayer();
 			}
 			
 		}

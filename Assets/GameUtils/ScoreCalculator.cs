@@ -38,16 +38,21 @@ namespace Assets.GameUtils
 										int bcount,wcount = bcount = 0;
 										foreach(Intersection i in goban.GetAround(goban[x, y]))
 										{
+											string leown = "";
 											if(i.Owner == whitep)
 											{
 												wcount++;
+										leown = "White";
 											}else if(i.Owner == blackp)
 											{
 												bcount++;
+										leown = "Black";
 											}
-											
+											if(i.Owner != null)
+												Debug.Log(string.Format("x:{0} y:{1} owner : {2}",x,y,leown));
 											
 										}
+										Debug.Log(string.Format("x:{0} y:{1} wcount:{2} bcount:{3}",x,y,wcount,bcount));
 										if(wcount > bcount)
 										{
 											if(bcount == 0 && wcount == 1)
@@ -55,32 +60,32 @@ namespace Assets.GameUtils
 												this.WhiteFinalScore+=0.5;
 												Case o = GameObject.Find(string.Format("inter_{0}_{1}",x,y)).GetComponent<Case>();
 												o.ScoreColor =Color.green;
-												o.GetComponent<Case>().ScoreColor = new Color(0,0,0,0.2f);
+												o.GetComponent<Case>().ScoreColor = new Color(255f,255f,255f,0.4f);
+												Debug.Log ("Petite case de blanc");
 											}
 											else{
 												this.WhiteFinalScore++;
-												GameObject.Find(string.Format("inter_{0}_{1}",x,y)).GetComponent<Case>().ScoreColor = new Color(0,0,0,0.8f);
+												GameObject.Find(string.Format("inter_{0}_{1}",x,y)).GetComponent<Case>().ScoreColor = new Color(255,255,255,1);
 											}
 											
 										}else if(wcount < bcount)
 										{
+											
 											if(wcount == 0 && bcount == 1)
 											{
+												//Un seul NOIR
 												this.BlackFinalScore+=0.5;
 												GameObject o = GameObject.Find(string.Format("inter_{0}_{1}",x,y));
-												o.GetComponent<Case>().ScoreColor =Color.green;
-												o.GetComponent<Case>().ScoreColor = new Color(255,255,255,0.2f);
+												o.GetComponent<Case>().ScoreColor = new Color(0f,0f,0f,0.3f);
 											}
 											else{
 												this.BlackFinalScore++;
 											}
-											GameObject.Find(string.Format("inter_{0}_{1}",x,y)).GetComponent<Case>().ScoreColor = new Color(255,255,255,0.6f);
+											GameObject.Find(string.Format("inter_{0}_{1}",x,y)).GetComponent<Case>().ScoreColor = new Color(0,0,0,1);
 										}else
 										{
-											Debug.Log("ee");
+										
 										}
-
-										Debug.Log(string.Format("x:{0} y:{1} wcount:{2} bcount:{3}",x,y,wcount,bcount));
 									}
 								}
 							}

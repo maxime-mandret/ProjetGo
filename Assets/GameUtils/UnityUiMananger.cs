@@ -21,8 +21,7 @@ namespace Assets.GameUtils
             if (pion != null)
             {
                 pion.name = "pion";
-                pion.renderer.material.color = p.Color == PlayerColor.Black ? Color.black : Color.white;
-				pion.GetComponent<StopOnCollision>().baseCouleur = p.Color == PlayerColor.Black ? Color.black : Color.white;;
+				pion.GetComponent<StopOnCollision>().baseCouleur = pion.renderer.material.color = p == GameObject.Find ("Game Logic").GetComponent<GameLogicDisplay> ().Game.BlackPlayer ? Color.black : Color.white;
             }
         }
 
