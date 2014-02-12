@@ -66,7 +66,7 @@ namespace Assets.GameUtils
 											else{
 												this.WhiteFinalScore++;
 												if(display){
-													GameObject.Find(string.Format("inter_{0}_{1}",x,y)).GetComponent<Case>().ScoreColor = new Color(255,255,255,1);
+													GameObject.Find(string.Format("inter_{0}_{1}",x,y)).GetComponent<Case>().ScoreColor = new Color(255f,255f,255f,1f);
 												}
 												
 											}
@@ -84,10 +84,11 @@ namespace Assets.GameUtils
 											}
 											else{
 												this.BlackFinalScore++;
+												if(display){
+													GameObject.Find(string.Format("inter_{0}_{1}",x,y)).GetComponent<Case>().ScoreColor = new Color(0f,0f,0f,1f);
+												}
 											}
-											if(display){
-												GameObject.Find(string.Format("inter_{0}_{1}",x,y)).GetComponent<Case>().ScoreColor = new Color(0,0,0,1);
-											}
+											
 										}else
 										{
 										
