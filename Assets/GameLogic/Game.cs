@@ -26,7 +26,7 @@ namespace Assets.GameLogic
 			this.BlackPlayer = blackPlayer;
 			this.CurrentPlayer = WhitePlayer;
 			this.Status = "playing";
-			_scalc = new ScoreCalculator ();
+			_scalc = new ScoreCalculator (_whitePlayer,_blackPlayer);
 		}
 		
 		public void PasserTour()
@@ -44,7 +44,7 @@ namespace Assets.GameLogic
 		public void EndGame()
 		{
 
-			_scalc.CalculateFinalScore (this.Goban,_whitePlayer,_blackPlayer);
+			_scalc.CalculateFinalScore (this.Goban,true);
 			this.BlackScore = _scalc.BlackFinalScore;
 			this.WhiteScore = _scalc.WhiteFinalScore;
 			this.Status = "over";

@@ -7,23 +7,28 @@ namespace Assets.GameUtils
 		{
 				public double WhiteFinalScore { get; set;}
 				public double BlackFinalScore { get; set;}
-				public ScoreCalculator ()
+				private Player _whitePlayer;
+				private Player _blackPlayer;
+
+				public ScoreCalculator (Player whitep,Player blackp)
 				{
 					this.WhiteFinalScore = 0;
 					this.BlackFinalScore = 0;
+					this._whitePlayer = whitep;
+					this._blackPlayer = blackp;
 				}
 
-				public bool CalculateFinalScore(Goban goban, Player whitep, Player blackp)
+				public bool CalculateFinalScore(Goban goban,bool display = false)
 				{
 					int score = 0;
 					for(int x = 0; x < goban.Size; x++)
 					{
 						for(int y = 0; y < goban.Size; y++)
 						{
-							if(goban[x, y].Owner == whitep)
+							if(goban[x, y].Owner == this._whitePlayer)
 							{
 								this.WhiteFinalScore++;
-							}else if(goban[x, y].Owner == blackp)
+							}else if(goban[x, y].Owner == this._blackPlayer)
 							{
 								this.BlackFinalScore++;
 							}else if(goban[x, y].Owner == null)
@@ -39,10 +44,10 @@ namespace Assets.GameUtils
 										foreach(Intersection i in goban.GetAround(goban[x, y]))
 										{
 											string leown = "";
-											if(i.Owner == whitep)
+											if(i.Owner == this._whitePlayer)
 											{
 												wcount++;
-											}else if(i.Owner == blackp)
+											}else if(i.Owner == this._blackPlayer)
 											{
 												bcount++;
 											}
@@ -53,13 +58,17 @@ namespace Assets.GameUtils
 											if(bcount == 0 && wcount == 1)
 											{
 												this.WhiteFinalScore+=0.5;
-												Case o = GameObject.Find(string.Format("inter_{0}_{1}",x,y)).GetComponent<Case>();
-												o.ScoreColor =Color.green;
-												o.GetComponent<Case>().ScoreColor = new Color(255f,255f,255f,0.4f);
+												if(display){
+													GameObject.Find(string.Format("inter_{0}_{1}",x,y)).GetComponent<Case>().ScoreColor = new Color(255f,255f,255f,0.4f);
+												}
+												
 											}
 											else{
 												this.WhiteFinalScore++;
-												GameObject.Find(string.Format("inter_{0}_{1}",x,y)).GetComponent<Case>().ScoreColor = new Color(255,255,255,1);
+												if(display){
+													GameObject.Find(string.Format("inter_{0}_{1}",x,y)).GetComponent<Case>().ScoreColor = new Color(255,255,255,1);
+												}
+												
 											}
 											
 										}else if(wcount < bcount)
@@ -69,13 +78,16 @@ namespace Assets.GameUtils
 											{
 												//Un seul NOIR
 												this.BlackFinalScore+=0.5;
-												GameObject o = GameObject.Find(string.Format("inter_{0}_{1}",x,y));
-												o.GetComponent<Case>().ScoreColor = new Color(0f,0f,0f,0.3f);
+												if(display){
+													GameObject.Find(string.Format("inter_{0}_{1}",x,y)).GetComponent<Case>().ScoreColor = new Color(0f,0f,0f,0.3f);
+												}
 											}
 											else{
 												this.BlackFinalScore++;
 											}
-											GameObject.Find(string.Format("inter_{0}_{1}",x,y)).GetComponent<Case>().ScoreColor = new Color(0,0,0,1);
+											if(display){
+												GameObject.Find(string.Format("inter_{0}_{1}",x,y)).GetComponent<Case>().ScoreColor = new Color(0,0,0,1);
+											}
 										}else
 										{
 										
