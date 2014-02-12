@@ -2,7 +2,6 @@
 using Assets.GameUtils;
 using Assets.GameUtils.Sgf;
 using Assets.ObjetsDeJeu;
-using UnityEngine;
 
 namespace Assets.GameLogic
 {
@@ -52,7 +51,6 @@ namespace Assets.GameLogic
 		}
 		public void Update()
 		{
-			Debug.Log(((_currPlayer == _blackPlayer)?"Black":"White")+" turn");
 			if(this.Status != "over")
 			{
 				//Si il y a des randoms IA on les fait jouer !!!

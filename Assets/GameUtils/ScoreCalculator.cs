@@ -42,17 +42,12 @@ namespace Assets.GameUtils
 											if(i.Owner == whitep)
 											{
 												wcount++;
-										leown = "White";
 											}else if(i.Owner == blackp)
 											{
 												bcount++;
-										leown = "Black";
 											}
-											if(i.Owner != null)
-												Debug.Log(string.Format("x:{0} y:{1} owner : {2}",x,y,leown));
 											
 										}
-										Debug.Log(string.Format("x:{0} y:{1} wcount:{2} bcount:{3}",x,y,wcount,bcount));
 										if(wcount > bcount)
 										{
 											if(bcount == 0 && wcount == 1)
@@ -61,7 +56,6 @@ namespace Assets.GameUtils
 												Case o = GameObject.Find(string.Format("inter_{0}_{1}",x,y)).GetComponent<Case>();
 												o.ScoreColor =Color.green;
 												o.GetComponent<Case>().ScoreColor = new Color(255f,255f,255f,0.4f);
-												Debug.Log ("Petite case de blanc");
 											}
 											else{
 												this.WhiteFinalScore++;
