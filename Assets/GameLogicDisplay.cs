@@ -48,7 +48,7 @@ public class GameLogicDisplay : MonoBehaviour
 		if(PlayerPrefs.GetInt("gameMode") == 2)
 		{
 			RandomIaPlayer p1 = new RandomIaPlayer("Bob", PlayerColor.White);
-			RandomIaPlayer p2 = new RandomIaPlayer("Johnny", PlayerColor.Black);
+			SladIaPlayer p2 = new SladIaPlayer("Johnny", PlayerColor.Black);
 			GameObject.Find("NomBlanc").transform.FindChild("nom").guiText.text = p1.Name;
 			GameObject.Find("NomNoir").transform.FindChild("nom").guiText.text = p2.Name;
 			Game = new Game(9, p1, p2);

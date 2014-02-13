@@ -63,7 +63,7 @@ namespace Assets.GameLogic
 					{
 						c = player.GetBestMove(this.Goban);
 						nbEssais++;
-					} while (!Goban.CanPlay(c.X, c.Y) && nbEssais <= 1);
+					} while (!Goban.CanPlay(c.X, c.Y) && nbEssais <= 5);
 
 					if(!Goban.CanPlay(c.X, c.Y))
 					{
@@ -72,9 +72,30 @@ namespace Assets.GameLogic
 					{
 						this.PutRock(c.X, c.Y);
 					}
+					NbTour++;
+					return;
+				}
+
+				//Si il y a des randoms IA on les fait jouer !!!
+				SladIaPlayer player2 = CurrentPlayer as SladIaPlayer;
+				int nbEssaisPute = 0;
+				if(player2 != null)
+				{
+					Coordonnees c = null;
+					c = player2.GetBestMove(this.Goban);
+					
+					if(c == null || !Goban.CanPlay(c.X, c.Y))
+					{
+						PasserTour();
+					} else
+					{
+						this.PutRock(c.X, c.Y);
+					}
+					NbTour++;
+					return;
 				}
 			}
-			NbTour++;
+
 		}
 		
 		public Game(string path)
