@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using DbGobansContext;
 
 namespace Assets.ObjetsDeJeu
 {
@@ -7,8 +9,7 @@ namespace Assets.ObjetsDeJeu
 		private int _x;
 
 		private int _y;
-
-
+        
 		public Coordonnees(int x, int y)
 		{
 			_x = x;
