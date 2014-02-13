@@ -5,7 +5,13 @@ namespace Assets.ObjetsDeJeu
 {
 	public class Goban
 	{
-		private Intersection[,] _cases;
+        private Intersection[,] _cases;
+
+        public Intersection[,] Intersections
+        {
+            get { return _cases; }
+            set { _cases = value; }
+        }
 		private Stack<Move> _moveList;
 		public int Size{ get; set;}
 		private IList<Groupe> _groupes;
@@ -102,7 +108,7 @@ namespace Assets.ObjetsDeJeu
 		}
 
 		public Intersection this[int x, int y] {
-			get { return _cases[x, y]; }
+			get { return Intersections[x, y]; }
 		}
 
 		public Stack<Move> MoveList {
@@ -143,5 +149,7 @@ namespace Assets.ObjetsDeJeu
 			return this.Groupes.First(g => g.Contains(i));
 		}
 
-	}
+
+        
+    }
 }

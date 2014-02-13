@@ -6,11 +6,13 @@ namespace Assets.ObjetsDeJeu
 	{
 		White,
 		Black
-    }
-	;
+    };
+
 
 	public class Player : IEquatable<Player>
 	{
+		public int _width = 9;
+		public int _height = 9;
         public PlayerColor Color { get; set; }
 		public Player(string name, PlayerColor color)
 		{

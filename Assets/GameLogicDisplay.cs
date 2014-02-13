@@ -22,6 +22,8 @@ public class GameLogicDisplay : MonoBehaviour
     private float downTime;
     public bool updateLock;
 	private UnityUiMananger ui;
+	private int _width = 9;
+	private int _height = 9;
 
 	void Start()
 	{
@@ -32,9 +34,9 @@ public class GameLogicDisplay : MonoBehaviour
 		GameObject initialPet = GameObject.Find("TheGoban");
 		//INIT THE GRID
 		//TODO remplacer 9 avec Goban.length
-		for(int i = 0; i<9; i++)
+		for(int i = 0; i < _width; i++)
 		{
-			for(int j = 0; j<9; j++)
+			for(int j = 0; j < _height; j++)
 			{
 				var pos = new Vector3((initPos.x - (casesEcart * i)), (initPos.y - (casesEcart * j)), initPos.z);
 				var unecase = (GameObject)Object.Instantiate(uneCase, initialPet.transform.position, Quaternion.identity);

@@ -51,7 +51,7 @@ namespace Assets.GameLogic
 		}
 		public void Update()
 		{
-			if(this.Status != "over")
+			if(this.Status == "playing")
 			{
 				//Si il y a des randoms IA on les fait jouer !!!
 				RandomIaPlayer player = CurrentPlayer as RandomIaPlayer;
@@ -63,7 +63,7 @@ namespace Assets.GameLogic
 					{
 						c = player.GetBestMove(this.Goban);
 						nbEssais++;
-					} while (!Goban.CanPlay(c.X, c.Y) && nbEssais <= 3);
+					} while (!Goban.CanPlay(c.X, c.Y) && nbEssais <= 1);
 
 					if(!Goban.CanPlay(c.X, c.Y))
 					{
