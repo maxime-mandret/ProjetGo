@@ -6,3 +6,4 @@
 *.unityproj
 /.project
 *.csproj
+*.userprefs
