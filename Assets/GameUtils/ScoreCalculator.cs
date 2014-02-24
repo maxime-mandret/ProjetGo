@@ -20,8 +20,11 @@ namespace Assets.GameUtils
             this._blackPlayer = blackp;
             this._noPlayer = new Player("noplayer", PlayerColor.Black);
         }
+		public bool CalculateFinalScore(Goban goban, bool display = false)
+		{
 
-        public bool CalculateFinalScore(Goban goban, bool display = false)
+		}
+        public bool CalculateFinalScore2(Goban goban, bool display = false)
         {
 
             _tabIntersect = (Intersection[,])goban.Intersections.Clone();
