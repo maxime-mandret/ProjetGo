@@ -1,6 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
+
 namespace Assets.ObjetsDeJeu
 {
 	public class SladIaPlayer : Player, IAPlayer
