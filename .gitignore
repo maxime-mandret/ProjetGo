@@ -6,3 +6,5 @@
 *.unityproj
 /.project
 *.userprefs
+/DbObjectLib/bin
+/DbObjectLib/obj
