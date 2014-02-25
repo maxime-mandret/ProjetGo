@@ -1,15 +1,18 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 
 namespace Assets.ObjetsDeJeu
 {
 	public class SladIaPlayer : Player, IAPlayer
 	{
-		private Pattern _currentPattern = null;
-		private int indexPattern = 0;
-		private Pattern[] _patterns;
+	    private int _currentIndex;
+		private Pattern _currentPattern;
+		private readonly Pattern[] _patterns;
 		private Coordonnees _currentPoint;
+	    private Coordonnees _nextCoord;
+
 		public SladIaPlayer(string name, PlayerColor color) : base(name,color)
 		{
 			_patterns = new Pattern[4];
@@ -21,25 +24,60 @@ namespace Assets.ObjetsDeJeu
 		
 		public Coordonnees GetBestMove(Goban goban)
 		{
-			if (_currentPattern == null) {
-				_currentPattern = _patterns[indexPattern];
-			}
-			Coordonnees c = _currentPattern.getNextCoord ();
+            // Si on a plus aucun coup à jouer on retourne null
+            bool isOver = true;
+		    foreach (Pattern t in _patterns)
+		    {
+		        if (!t.isPatternOver())
+		        {
+		            isOver = false;
+		        }
+		    }
+		    if (isOver)
+            {
+                RandomIaPlayer r = new RandomIaPlayer("Random", PlayerColor.Black);
+                return r.GetBestMove(goban);
+		    }
 
-			if (c != null && !goban.CanPlay (c.X, c.Y) && !_currentPattern.isPatternOver ()) {
-				c = _currentPattern.getNextCoord ();
-			}
+		    // On boucle jusqu'à ce qu'on trouve une place pour jouer
+            bool canPlay = false;
+		    while (!canPlay)
+		    {
+                // Choix d'une pattern
+                var random = new Random();
+                int randomNumber = random.Next(0, _patterns.Length);
+                _currentPattern = _patterns[randomNumber];
+                _currentIndex = randomNumber;
 
-			if (indexPattern + 1 >= _patterns.Length && c == null) {
-				return null;
-			}
-			if (c == null && indexPattern + 1 < _patterns.Length || !goban.CanPlay(c.X,c.Y)) {
-					indexPattern++;
-					_currentPattern = _patterns [indexPattern];
-					c = _currentPattern.getNextCoord ();
-			}
-
-			return c;
+                // Si la pattern n'est pas finie on tente de la terminer
+		        if (!_currentPattern.isPatternOver())
+		        {
+		                // On récupère la prochaine coordonnée
+                    _nextCoord = _currentPattern.getNextCoord();
+		            if (_nextCoord != null && goban.CanPlay(_nextCoord.X, _nextCoord.Y))
+		            {
+		                canPlay = true;
+		            }
+		        }
+		        else
+		        {
+		            // On vérifie si les autres ne sont pas vides pour sortir
+                    isOver = true;
+                    foreach (Pattern t in _patterns)
+                    {
+                        if (!t.isPatternOver())
+                        {
+                            isOver = false;
+                        }
+                    }
+                    if (isOver)
+                    {
+                        RandomIaPlayer r = new RandomIaPlayer("Random", PlayerColor.Black);
+                        return r.GetBestMove(goban);
+                    }
+		        }
+		    }
+		    return _nextCoord;
 		}
 	}
 }

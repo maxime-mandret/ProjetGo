@@ -25,6 +25,12 @@ namespace Assets.GameUtils
             }
         }
 
+		public void deletePion(int x, int y)
+		{
+			//GameObject.Destroy (GameObject.Find ("inter_" + x + "_" + y).transform.FindChild ("pion").gameObject);
+			GameObject.Find ("inter_" + x + "_" + y).transform.FindChild ("pion").renderer.material.color = Color.red;
+		}
+
 		public void DisplayToolTip(string s)
 		{
 				string[] st = s.Split ('_');
@@ -42,7 +48,7 @@ namespace Assets.GameUtils
 				if(leGroupe != null)
 				{
 					foreach (Intersection inter in leGroupe) {
-						if(GameObject.Find(String.Format("inter_{0}_{1}",inter.Coord.X,inter.Coord.Y)).transform.childCount > 0)
+						if(GameObject.Find(String.Format("inter_{0}_{1}",inter.Coord.X,inter.Coord.Y)).transform.childCount > 0 && GameObject.Find (String.Format ("inter_{0}_{1}", inter.Coord.X, inter.Coord.Y)).transform.GetChild (0).renderer.material.color != Color.red)
 						{
 							GameObject.Find (String.Format ("inter_{0}_{1}", inter.Coord.X, inter.Coord.Y)).transform.GetChild (0).GetComponent<StopOnCollision> ().Select ();
 						}
@@ -58,7 +64,7 @@ namespace Assets.GameUtils
 			List<Groupe> g = (List<Groupe>)gobin.Groupes;
 			foreach (Groupe gr in g) {
 				foreach (Intersection inter in gr) {
-					if(GameObject.Find(String.Format("inter_{0}_{1}",inter.Coord.X,inter.Coord.Y)).transform.childCount > 0)
+					if(GameObject.Find(String.Format("inter_{0}_{1}",inter.Coord.X,inter.Coord.Y)).transform.childCount > 0 && GameObject.Find (String.Format ("inter_{0}_{1}", inter.Coord.X, inter.Coord.Y)).transform.GetChild (0).renderer.material.color != Color.red)
 					{
 						GameObject.Find(String.Format("inter_{0}_{1}",inter.Coord.X,inter.Coord.Y)).transform.GetChild(0).GetComponent<StopOnCollision>().Deselect();
 					}
