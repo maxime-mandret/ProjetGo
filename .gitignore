@@ -8,3 +8,9 @@
 *.userprefs
 /DbObjectLib/bin
 /DbObjectLib/obj
+/SolutionProjetGo/SolutionProjetGo.sln.DotSettings.user
+/SolutionProjetGo/SolutionProjetGo.v11.suo
+/SolutionProjetGo/GobanTest/bin
+/SolutionProjetGo/GobanTest/obj
+/SolutionProjetGo/TestResults
+/Temp
