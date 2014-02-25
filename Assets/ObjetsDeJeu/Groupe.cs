@@ -54,10 +54,10 @@ namespace Assets.ObjetsDeJeu
 				return new List<Intersection>();
 			}
 			
-			List<Intersection> hull = new List<Intersection>();
+			List<Intersection> hull = new List<Intersection>(); 
 			
 			// get leftmost point
-			Intersection vPointOnHull = this.Where(p => p.Coord.X == this.Min(min => min.Coord.X)).First();
+			Intersection vPointOnHull = this.First(p => p.Coord.X == this.Min(min => min.Coord.X));
 			
 			Intersection vEndpoint;
 			do
@@ -80,7 +80,8 @@ namespace Assets.ObjetsDeJeu
 			while (vEndpoint != hull[0]);
 		    foreach (Intersection intersection in hull)
 		    {
-		        Debug.Log(String.Format("X : {0}, Y : {1}", intersection.Coord.X, intersection.Coord.Y));
+                GameObject.Find(string.Format("inter_{0}_{1}", intersection.Coord.X, intersection.Coord.Y)).GetComponent<Case>().ScoreColor = new Color(255f, 0f, 0f, 1f);
+		        //Debug.Log(String.Format("X : {0}, Y : {1}", intersection.Coord.X, intersection.Coord.Y));
 		    }
 
 			return hull;
