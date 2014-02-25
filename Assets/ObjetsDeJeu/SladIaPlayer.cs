@@ -34,8 +34,9 @@ namespace Assets.ObjetsDeJeu
 		        }
 		    }
 		    if (isOver)
-		    {
-		        return null;
+            {
+                RandomIaPlayer r = new RandomIaPlayer("Random", PlayerColor.Black);
+                return r.GetBestMove(goban);
 		    }
 
 		    // On boucle jusqu'à ce qu'on trouve une place pour jouer
@@ -71,7 +72,8 @@ namespace Assets.ObjetsDeJeu
                     }
                     if (isOver)
                     {
-                        return null;
+                        RandomIaPlayer r = new RandomIaPlayer("Random", PlayerColor.Black);
+                        return r.GetBestMove(goban);
                     }
 		        }
 		    }
