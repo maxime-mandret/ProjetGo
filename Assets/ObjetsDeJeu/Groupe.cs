@@ -11,7 +11,7 @@ namespace Assets.ObjetsDeJeu
 			//On parcours chaque groupe pour regarder si il se trouve dans notre groupe actuel
 			//SI le groupe à plus de 3 pions
 			if (this.Count > 3) {
-				foreach (Groupe g in goban.Groupes) {
+				foreach (Groupe g in goban.Groupes.Where(i=>i[0].Owner != this[0].Owner)) {
 						if (this.IsPointInPolygon (g.getCentroid ())) {
 								//Le centroid du coupe est dans le notre
 								prs.AddRange (g);

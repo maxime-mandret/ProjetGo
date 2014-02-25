@@ -32,6 +32,9 @@ namespace Assets.GameUtils
 					ui.deletePion(i.Coord.X,i.Coord.Y);
 					i.Owner = null;
 				}
+				//les points des pionts
+				this.ajoutPoint(g);
+				//les points de capture
 				this.ajoutPoint(g[0].Owner,g.getFreeInterCount(goban));
 			}
 			return true;
