@@ -51,7 +51,7 @@
     </Compile>
     <Compile Include="DbGeneral.cs" />
     <Compile Include="DbGoban.cs" />
-    <Compile Include="DbJoueurs.cs" />
+    <Compile Include="DbJoueur.cs" />
     <Compile Include="DbPartie.cs" />
     <Compile Include="DbPion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
