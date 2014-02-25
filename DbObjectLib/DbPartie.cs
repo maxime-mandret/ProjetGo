@@ -8,6 +8,15 @@ namespace DbGobansContext
 {
     public partial class DbPartie
     {
+        public static List<DbPartie> GetPendingGames (DbGobansDataContext context)
+        {
+            var incompleteGames = new List<DbPartie>();
+            incompleteGames.AddRange(context.DbParties.Where(part => part.DbJoueurs_IdJoueurNoir == null || part.DbJoueurs_IdJoueurBlanc == null));
+            Debug.WriteLine(incompleteGames.Count + " pending games found");
+
+            return incompleteGames;
+        }
+
         public void AddWhitePlayer (DbJoueur joueur)
         {
             if (this.DbJoueurs_IdJoueurBlanc == null)

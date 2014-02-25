@@ -44,15 +44,20 @@ namespace GoabanTest
             DbPartie partie1 = new DbPartie {DbJoueurs_IdJoueurBlanc = boby, HeureDebut = DateTime.Now};
             Context.DbParties.InsertOnSubmit(partie1);
 
-            DbPartie partie2 = new DbPartie { DbJoueurs_IdJoueurBlanc = boby, HeureDebut = DateTime.Now };
+            DbPartie partie2 = new DbPartie { DbJoueurs_IdJoueurNoir = boby, HeureDebut = DateTime.Now };
             Context.DbParties.InsertOnSubmit(partie2);
 
             DbPartie partie3 = new DbPartie { DbJoueurs_IdJoueurBlanc = boby, HeureDebut = DateTime.Now };
             Context.DbParties.InsertOnSubmit(partie3);
+            Context.SubmitChanges();
 
+            var currentGames = boby.GetCurrentGames();
+            Assert.IsTrue(currentGames.Count == 3);
 
-
-
+            Context.DbParties.DeleteOnSubmit(partie1);
+            Context.DbParties.DeleteOnSubmit(partie2);
+            Context.DbParties.DeleteOnSubmit(partie2);
+            Context.DbJoueurs.DeleteOnSubmit(boby);
         }
     }
 }

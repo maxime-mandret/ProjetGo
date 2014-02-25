@@ -50,7 +50,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataContext.lqml</DependentUpon>
     </Compile>
-    <Compile Include="DbGeneral.cs" />
     <Compile Include="DbGoban.cs" />
     <Compile Include="DbJoueur.cs" />
     <Compile Include="DbPartie.cs" />

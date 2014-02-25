@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EntityDeveloper Version="5.7.296.0">
-  <ModelSettings xmlns:ed="http://devart.com/schemas/EntityDeveloper/1.0" AppConnectionStringName="DbGobansDataContextConnectionString" ConnectionStringInAppConfig="True" RegenareteConnectionStringInAppConfig="True" TargetFramework="Net45" DetectTPTInheritance="False">
+  <ModelSettings xmlns:ed="http://devart.com/schemas/EntityDeveloper/1.0" AppConnectionStringName="DbGobansDataContextConnectionString" ConnectionStringInAppConfig="True" RegenareteConnectionStringInAppConfig="True" DetectTPTInheritance="False">
     <Generation />
     <DatabaseFirstNamingRules>
       <EntitySet PluralizationName="Pluralize" />

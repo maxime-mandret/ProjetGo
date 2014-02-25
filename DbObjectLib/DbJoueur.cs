@@ -11,11 +11,6 @@ namespace DbGobansContext
 {
     public partial class DbJoueur
     {
-        public bool IsConnectedToParty()
-        {
-            return this.DbParties_IdJoueurBlanc.Count + this.DbParties_IdJoueurNoir.Count > 0;
-        }
-
         public EntitySet<DbPartie> GetCurrentGames()
         {
             var currentGames = new EntitySet<DbPartie>();
