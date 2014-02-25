@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Assets.ObjetsDeJeu
 {
@@ -76,7 +78,11 @@ namespace Assets.ObjetsDeJeu
 				
 			}
 			while (vEndpoint != hull[0]);
-			
+		    foreach (Intersection intersection in hull)
+		    {
+		        Debug.Log(String.Format("X : {0}, Y : {1}", intersection.Coord.X, intersection.Coord.Y));
+		    }
+
 			return hull;
 		}
 		
