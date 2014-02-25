@@ -12,7 +12,6 @@ namespace DbGobansContext
     {
         public DbPion GetLastCoup()
         {
-
             int? maxCoup = this.DbPions.Max(pion => pion.NumeroCoup);
             if (maxCoup.HasValue)
             {

@@ -8,28 +8,38 @@ namespace DbGobansContext
 {
     public partial class DbPartie
     {
+        public static List<DbPartie> GetAllRunningGames (DbGobansDataContext context)
+        {
+            var runningGames = context.DbParties.Where(g => g.EtatPartie == "En cours");
+            return runningGames.ToList();
+        }
+
         public static List<DbPartie> GetPendingGames (DbGobansDataContext context)
         {
             var incompleteGames = new List<DbPartie>();
             incompleteGames.AddRange(context.DbParties.Where(part => part.DbJoueurs_IdJoueurNoir == null || part.DbJoueurs_IdJoueurBlanc == null));
-            Debug.WriteLine(incompleteGames.Count + " pending games found");
-
             return incompleteGames;
         }
 
-        public void AddWhitePlayer (DbJoueur joueur)
+        public void AddPlayer (DbJoueur joueur)
         {
             if (this.DbJoueurs_IdJoueurBlanc == null)
             {
                 this.DbJoueurs_IdJoueurBlanc = joueur;
             }
-        }
-
-        public void AddBlackPlayer (DbJoueur joueur)
-        {
-            if (this.DbJoueurs_IdJoueurNoir == null)
+            else if (this.DbJoueurs_IdJoueurNoir == null)
             {
                 this.DbJoueurs_IdJoueurNoir = joueur;
+            }
+            else
+            {
+                throw new InvalidOperationException("Game is full");
+            }
+
+            if (this.DbJoueurs_IdJoueurBlanc != null && this.DbJoueurs_IdJoueurNoir != null)
+            {
+                this.EtatPartie = "En cours";
+                this.HeureDebut = DateTime.Now;
             }
         }
 
