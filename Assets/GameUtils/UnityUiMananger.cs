@@ -25,6 +25,11 @@ namespace Assets.GameUtils
             }
         }
 
+		public void deletePion(int x, int y)
+		{
+			GameObject.Destroy (GameObject.Find ("inter_" + x + "_" + y).transform.FindChild ("pion").gameObject);
+		}
+
 		public void DisplayToolTip(string s)
 		{
 				string[] st = s.Split ('_');
