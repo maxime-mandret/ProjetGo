@@ -49,9 +49,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataContext.lqml</DependentUpon>
     </Compile>
+    <Compile Include="DbGeneral.cs" />
+    <Compile Include="DbGoban.cs" />
+    <Compile Include="DbJoueurs.cs" />
+    <Compile Include="DbPartie.cs" />
+    <Compile Include="DbPion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="DataContext.Diagram1.view">
       <DependentUpon>DataContext.lqml</DependentUpon>
     </None>
