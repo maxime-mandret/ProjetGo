@@ -15,10 +15,44 @@ namespace GoabanTest
         [TestMethod]
         public void ConnectOrCreateTest()
         {
-            DbJoueur.ConnectOrCreatePlayer("Duck My Sick", Context);
-            Assert.IsTrue(Context.Connection.State == ConnectionState.Closed);
-            Assert.IsTrue(Context.DbJoueurs.Count(player => player.Nom == "Duck My Sick") > 0);
-            
+            const string playerName = "Test Player";
+            DbJoueur joueur = null;
+            try
+            {
+                joueur = DbJoueur.ConnectOrCreatePlayer(playerName, Context);
+                Context.SubmitChanges();
+                Assert.IsTrue(Context.DbJoueurs.Count(player => player.Nom == playerName) > 0);
+                Assert.IsNotNull(joueur);
+            }
+            catch (Exception e)
+            {
+                if (joueur != null)
+                {
+                    Context.DbJoueurs.DeleteOnSubmit(joueur);
+                    Context.SubmitChanges();
+                }
+                Assert.Fail(e.Message);
+            }
+        }
+
+        [TestMethod]
+        public void GetCurrentGamesTest()
+        {
+            DbJoueur boby = new DbJoueur {Nom = "Boby"};
+            Context.DbJoueurs.InsertOnSubmit(boby);
+
+            DbPartie partie1 = new DbPartie {DbJoueurs_IdJoueurBlanc = boby, HeureDebut = DateTime.Now};
+            Context.DbParties.InsertOnSubmit(partie1);
+
+            DbPartie partie2 = new DbPartie { DbJoueurs_IdJoueurBlanc = boby, HeureDebut = DateTime.Now };
+            Context.DbParties.InsertOnSubmit(partie2);
+
+            DbPartie partie3 = new DbPartie { DbJoueurs_IdJoueurBlanc = boby, HeureDebut = DateTime.Now };
+            Context.DbParties.InsertOnSubmit(partie3);
+
+
+
+
         }
     }
 }

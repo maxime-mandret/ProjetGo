@@ -4,7 +4,6 @@ using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Devart.Data.Linq;
 using Devart.Data.Linq.Mapping;
 
@@ -31,22 +30,9 @@ namespace DbGobansContext
             var player = context.DbJoueurs.FirstOrDefault(p => p.Nom == playerName);
             if (player == null)
             {
-
-                //context.Connection.Open();
-                //var transaction = context.Connection.BeginTransaction(IsolationLevel.Serializable);
-
-                //Debug.WriteLine("Creating player " + playerName);
-                //var newPlayer = new DbJoueurs { Nom = playerName };
-                //context.DbJoueurs.InsertOnSubmit(newPlayer);
-
-                //transaction.Commit();
-                //context.Connection.Close();
-
                 Debug.WriteLine("Creating player " + playerName);
                 var newPlayer = new DbJoueur { Nom = playerName };
                 context.DbJoueurs.InsertOnSubmit(newPlayer);
-                context.SubmitChanges();
-
                 return newPlayer;
             }
             else
