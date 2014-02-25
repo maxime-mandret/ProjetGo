@@ -64,6 +64,7 @@
      <Compile Include="Assets\ObjetsDeJeu\Groupe.cs" />
      <Compile Include="Assets\ObjetsDeJeu\IAPlayer.cs" />
      <Compile Include="Assets\ObjetsDeJeu\Intersection.cs" />
+     <Compile Include="Assets\ObjetsDeJeu\MinMax.cs" />
      <Compile Include="Assets\ObjetsDeJeu\Move.cs" />
      <Compile Include="Assets\ObjetsDeJeu\Pattern.cs" />
      <Compile Include="Assets\ObjetsDeJeu\Player.cs" />

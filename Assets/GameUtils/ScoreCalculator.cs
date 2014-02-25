@@ -30,8 +30,9 @@ namespace Assets.GameUtils
 				foreach(Intersection i in prisoniers)
 				{
 					ui.deletePion(i.Coord.X,i.Coord.Y);
+					i.Owner = null;
 				}
-				this.ajoutPoint(g);
+				this.ajoutPoint(g[0].Owner,g.getFreeInterCount(goban));
 			}
 			return true;
 		}
@@ -42,6 +43,14 @@ namespace Assets.GameUtils
 				WhiteFinalScore += g.Count;
 			} else {
 				BlackFinalScore += g.Count;
+			}
+		}
+		public void ajoutPoint(Player p, int nb)
+		{
+			if (p == _whitePlayer) {
+				WhiteFinalScore += nb;
+			} else {
+				BlackFinalScore += nb;
 			}
 		}
     }

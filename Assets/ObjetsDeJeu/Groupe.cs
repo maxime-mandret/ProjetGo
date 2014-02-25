@@ -8,19 +8,28 @@ namespace Assets.ObjetsDeJeu
         public Groupe getPrisoners(Goban goban)
 		{
 			Groupe prs = new Groupe ();
-			foreach (Groupe g in goban.Groupes) {
-				if(this.IsPointInPolygon(g.getCentroid()))
-				{
-					//Le centroid du coupe est dans le notre
-					prs.AddRange(g);
+			//On parcours chaque groupe pour regarder si il se trouve dans notre groupe actuel
+			//SI le groupe à plus de 3 pions
+			if (this.Count > 3) {
+				foreach (Groupe g in goban.Groupes) {
+						if (this.IsPointInPolygon (g.getCentroid ())) {
+								//Le centroid du coupe est dans le notre
+								prs.AddRange (g);
+						}
+					}
 				}
-			}
 			return prs;
 		}
 
-		public int getFreeInterCount()
+		public int getFreeInterCount(Goban goban)
 		{
-			return 0;
+			int nb = 0;
+			foreach(Intersection i in goban.Intersections)
+			{
+				if(IsPointInPolygon(i.Coord))
+				nb++;
+			}
+			return nb;
 		}
 
 		private Coordonnees getCentroid()

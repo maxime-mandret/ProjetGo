@@ -18,8 +18,8 @@ namespace Assets.ObjetsDeJeu
 			_patterns = new Pattern[4];
 			_patterns [0] = new Pattern(new Coordonnees(3,0),new Coordonnees(0,1),new Coordonnees(0,1),new Coordonnees(0,1),new Coordonnees(-1,0),new Coordonnees(-1,0),new Coordonnees(-1,0));
 			_patterns [2] = new Pattern (new Coordonnees (5, 0), new Coordonnees (0, 1), new Coordonnees (0, 1), new Coordonnees (0, 1), new Coordonnees (1, 0), new Coordonnees (1, 0), new Coordonnees (1, 0));
-			_patterns [3] = new Pattern (new Coordonnees (5, 5),new Coordonnees(1,1),new Coordonnees(0,1),new Coordonnees(-1,1),new Coordonnees(-1,-1),new Coordonnees(0,-1));
-			_patterns [1] = new Pattern (new Coordonnees (0, 5),new Coordonnees (1, 0),new Coordonnees (0, 1),new Coordonnees (0, 1),new Coordonnees (-1, 0),new Coordonnees (1, 1),new Coordonnees (1, -1),new Coordonnees (1, 0),new Coordonnees (0, 1));
+			_patterns [3] = new Pattern (new Coordonnees (5, 5),new Coordonnees(1,0),new Coordonnees(0,1),new Coordonnees(-1,1),new Coordonnees(-1,-1),new Coordonnees(0,-1));
+			_patterns [1] = new Pattern (new Coordonnees (0, 5),new Coordonnees (1, 0),new Coordonnees (0, 1),new Coordonnees (0, 1),new Coordonnees (0, 1),new Coordonnees (0, 1),new Coordonnees (-1, 0),new Coordonnees (-1, 0),new Coordonnees (-1, 0),new Coordonnees (0, -1),new Coordonnees (1, 0),new Coordonnees (1,0));
 		}
 		
 		public Coordonnees GetBestMove(Goban goban)
