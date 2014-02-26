@@ -20,13 +20,32 @@ namespace Assets.GameLogic
             this.ApplicationDataContext = new DbGobansDataContext();
 
             // Création en base
-            //DbPartie partie = new DbPartie {DbJoueurs_IdJoueurBlanc = whitePlayer.DbPlayer, DbJoueurs_IdJoueurNoir = blackPlayer.DbPlayer};
-            //DbGoban goban = new DbGoban {DbPartie = partie, JoueurEnCour = partie.IdJoueurNoir};
-            //this.ApplicationDataContext.DbParties.InsertOnSubmit(partie);
-            //this.ApplicationDataContext.DbGobans.InsertOnSubmit(goban);
-            //this.ApplicationDataContext.SubmitChanges();
-            //moveStalker = new RemoteMovesStalker(goban);
+		    DbJoueur white = DbJoueur.ConnectOrCreatePlayer(whitePlayer.Name, ApplicationDataContext);
+		    DbJoueur black = DbJoueur.ConnectOrCreatePlayer(blackPlayer.Name, ApplicationDataContext);
+		    DbPartie partie = new DbPartie {DbJoueurs_IdJoueurBlanc = white, DbJoueurs_IdJoueurNoir = black};
+		    DbGoban goban = new DbGoban {DbPartie = partie, JoueurEnCour = partie.IdJoueurNoir};
+            this.ApplicationDataContext.DbJoueurs.InsertOnSubmit(white);
+            this.ApplicationDataContext.DbJoueurs.InsertOnSubmit(black);
+		    this.ApplicationDataContext.DbParties.InsertOnSubmit(partie);
+		    this.ApplicationDataContext.DbGobans.InsertOnSubmit(goban);
+		    this.ApplicationDataContext.SubmitChanges();
+		    moveStalker = new RemoteMovesStalker(goban);
+		    moveStalker.Observers.Add(this);
 		}
+
+        //public RemoteGame (DbGoban goban)
+        //{
+        //    this.ApplicationDataContext = new DbGobansDataContext();
+
+        //    // Récupération des coups
+        //    foreach (DbPion dbPion in goban.DbPions.OrderBy(p => p.NumeroCoup))
+        //    {
+        //        // Méthode classe mère car on ne sauvegarde pas le mouvement (vu qu'il existe deja)
+        //        base.PutRock(dbPion.PositionX, dbPion.PositionY);
+        //    }            
+            
+        //    moveStalker = new RemoteMovesStalker(goban);
+        //}
 		
 		public void EndGame()
 		{
@@ -63,7 +82,7 @@ namespace Assets.GameLogic
                     remotePlayerPlayed.WaitOne();
 			        DbPion lastCoup = moveStalker.LastCoupPlayed;
                     // Jouer le coup sur l'interface
-                    //this.UIManager.PoserPion(remotePlayer, lastCoup.PositionX, lastCoup.PositionY);
+                    this.UIManager.PoserPion(remotePlayer, lastCoup.PositionX, lastCoup.PositionY);
 			    }
 			    
 			}

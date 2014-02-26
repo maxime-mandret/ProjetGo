@@ -35,7 +35,7 @@ namespace Assets.GameLogic
             this.UIManager = new UnityUiMananger();
 			this.WhitePlayer = whitePlayer;
 			this.BlackPlayer = blackPlayer;
-			this.CurrentPlayer = WhitePlayer;
+			this.CurrentPlayer = BlackPlayer;
 			this.Status = "playing";
 			_scalc = new ScoreCalculator (_whitePlayer,_blackPlayer);
 		}
