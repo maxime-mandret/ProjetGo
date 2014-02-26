@@ -24,7 +24,7 @@
     <Type Name="DbPartie" ed:Guid="e3f97881-7445-422c-b8b9-04c9c324491c">
       <Column Name="idPartie" Member="IdPartie" Type="System.Int64" AutoSync="OnInsert" DbType="INT(10) UNSIGNED NOT NULL AUTO_INCREMENT" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="True" ed:Guid="88004ce3-5c84-444b-ad37-a703edc909ad" />
       <Column Name="idJoueurNoir" Member="IdJoueurNoir" Type="System.Int64" DbType="INT(10) UNSIGNED NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="10" ed:ValidateRequired="True" ed:Guid="8c5a0f8e-78a6-4da5-8386-30e1bfb3c36b" />
-      <Column Name="idJoueurBlanc" Member="IdJoueurBlanc" Type="System.Int64" DbType="INT(10) UNSIGNED NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="10" ed:ValidateRequired="True" ed:Guid="c71e6599-1081-4f63-a69c-260bf9d81e4b" />
+      <Column Name="idJoueurBlanc" Member="IdJoueurBlanc" Type="System.Int64" DbType="INT(10) UNSIGNED NULL" CanBeNull="true" UpdateCheck="Never" Precision="10" ed:ValidateRequired="False" ed:Guid="c71e6599-1081-4f63-a69c-260bf9d81e4b" />
       <Column Name="etatPartie" Member="EtatPartie" Type="System.String" DbType="ENUM NULL" CanBeNull="true" UpdateCheck="Never" DefaultValue="'En cours'" ed:ValidateRequired="False" ed:Guid="47b24971-74a5-4330-85b9-7ebae07c0de5" />
       <Column Name="heureDebut" Member="HeureDebut" Type="System.DateTime" DbType="TIMESTAMP NOT NULL" CanBeNull="false" UpdateCheck="Never" DefaultValue="CURRENT_TIMESTAMP" ed:ValidateRequired="True" ed:Guid="e6604cbf-042a-466e-8776-7339e3b6bdb4" />
       <Column Name="heureFin" Member="HeureFin" Type="System.DateTime" DbType="TIMESTAMP NULL" CanBeNull="true" UpdateCheck="Never" ed:ValidateRequired="False" ed:Guid="87da0c52-d339-418b-be4f-4942980a5b68" />
@@ -42,6 +42,7 @@
       <Column Name="Pioncol" Type="System.String" DbType="ENUM NULL" CanBeNull="true" UpdateCheck="Never" ed:ValidateRequired="False" ed:Guid="bfed0768-db5d-44aa-b6c9-a85046b2af45" />
       <Column Name="etatPion" Member="EtatPion" Type="System.String" DbType="ENUM NULL" CanBeNull="true" UpdateCheck="Never" DefaultValue="'Vivant'" ed:ValidateRequired="False" ed:Guid="ab9db0a2-709a-4993-a061-9d58e183759e" />
       <Column Name="numeroCoup" Member="NumeroCoup" Type="System.Int32" DbType="INT(3) NULL" CanBeNull="true" UpdateCheck="Never" Precision="3" ed:ValidateRequired="False" ed:Guid="e5b31a52-1a71-4043-b6ca-4a6020273af4" />
+      <Column Name="heurePion" Member="HeurePion" Type="System.DateTime" DbType="TIMESTAMP NOT NULL" CanBeNull="false" UpdateCheck="Never" DefaultValue="CURRENT_TIMESTAMP" ed:ValidateRequired="True" ed:Guid="6cd579ab-b74e-4534-97b9-ae0061594e6c" />
       <Association Name="DbGoban_DbPion" ed:AssociationGuid="5856bc2e-f8de-4120-87bd-370791c887fd" Member="DbGoban" ed:Guid="1358d2a5-4217-4e3d-b604-034a898a66e2" ThisKey="IdGoban" OtherKey="IdGoban" Type="DbGoban" DeleteRule="NO ACTION" IsForeignKey="true" />
     </Type>
   </Table>

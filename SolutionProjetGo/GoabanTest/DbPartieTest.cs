@@ -9,15 +9,36 @@ namespace GoabanTest
     public class DbPartieTest : DbTestClass
     {
         [TestMethod]
-        [Ignore]
         public void TestGetPendingGames()
         {
+
+            DbPartie p1 = getDummyPartie();
+            p1.DbJoueurs_IdJoueurBlanc = null;
+            DbPartie p2 = getDummyPartie();
+            DbPartie p3 = getDummyPartie();
+            DbPartie p4 = getDummyPartie();
+            p4.DbJoueurs_IdJoueurBlanc = null;
+
+            Context.DbParties.InsertOnSubmit(p1);
+            Context.DbParties.InsertOnSubmit(p2);
+            Context.DbParties.InsertOnSubmit(p3);
+            Context.DbParties.InsertOnSubmit(p4);
+
+            Context.SubmitChanges();
+
             var pending = DbPartie.GetPendingGames(Context);
-            Debug.WriteLine(pending.Count + " pending games found");
-            foreach (DbPartie game in pending)
-            {
-                Debug.WriteLine("Id Partie : " + game.IdPartie);
-            }
+
+            Context.DbParties.DeleteOnSubmit(p1);
+            Context.DbParties.DeleteOnSubmit(p2);
+            Context.DbParties.DeleteOnSubmit(p3);
+            Context.DbParties.DeleteOnSubmit(p4);
+
+            Context.DbJoueurs.DeleteOnSubmit(p2.DbJoueurs_IdJoueurBlanc);
+            Context.DbJoueurs.DeleteOnSubmit(p2.DbJoueurs_IdJoueurNoir);
+
+            Context.SubmitChanges();
+
+            Assert.AreEqual(2, pending.Count);
         }
 
         [TestMethod]
@@ -28,8 +49,8 @@ namespace GoabanTest
             DbPartie partie = new DbPartie();
             partie.AddPlayer(j1);
             partie.AddPlayer(j2);
-            Assert.AreEqual(j1, partie.DbJoueurs_IdJoueurBlanc);
-            Assert.AreEqual(j2, partie.DbJoueurs_IdJoueurNoir);
+            Assert.AreEqual(j1, partie.DbJoueurs_IdJoueurNoir);
+            Assert.AreEqual(j2, partie.DbJoueurs_IdJoueurBlanc);
             Assert.AreEqual("En cours", partie.EtatPartie);
             try
             {
@@ -96,6 +117,19 @@ namespace GoabanTest
             Context.DbParties.DeleteOnSubmit(partie4);
 
             Context.SubmitChanges();
+        }
+
+        private DbPartie getDummyPartie ()
+        {
+            DbJoueur noir = new DbJoueur { Nom = "Noir" };
+            DbJoueur blanc = new DbJoueur { Nom = "Blanc" };
+            DbPartie partie = new DbPartie
+            {
+                DbJoueurs_IdJoueurNoir = noir,
+                DbJoueurs_IdJoueurBlanc = blanc,
+            };
+
+            return partie;
         }
     }
 }

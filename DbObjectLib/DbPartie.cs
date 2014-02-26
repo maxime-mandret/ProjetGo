@@ -23,13 +23,13 @@ namespace DbGobansContext
 
         public void AddPlayer (DbJoueur joueur)
         {
-            if (this.DbJoueurs_IdJoueurBlanc == null)
-            {
-                this.DbJoueurs_IdJoueurBlanc = joueur;
-            }
-            else if (this.DbJoueurs_IdJoueurNoir == null)
+            if (this.DbJoueurs_IdJoueurNoir == null)
             {
                 this.DbJoueurs_IdJoueurNoir = joueur;
+            }
+            else if (this.DbJoueurs_IdJoueurBlanc == null)
+            {
+                this.DbJoueurs_IdJoueurBlanc = joueur;
             }
             else
             {
