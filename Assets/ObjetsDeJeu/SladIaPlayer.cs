@@ -52,7 +52,7 @@ namespace Assets.ObjetsDeJeu
                 // Si la pattern n'est pas finie on tente de la terminer
 		        if (!_currentPattern.isPatternOver())
 		        {
-		                // On récupère la prochaine coordonnée
+		            // On récupère la prochaine coordonnée
                     _nextCoord = _currentPattern.getNextCoord();
 		            if (_nextCoord != null && goban.CanPlay(_nextCoord.X, _nextCoord.Y))
 		            {

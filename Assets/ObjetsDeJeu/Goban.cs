@@ -129,21 +129,25 @@ namespace Assets.ObjetsDeJeu
 		public void PutRock(Move m)
 		{
 			Intersection target = this[m.Coord.X, m.Coord.Y];
-			target.Owner = m.Player;
-			this.MoveList.Push(m);
-			// Groupes
-			var friends = GetAround(target).FindAll(i => i.Owner == target.Owner);
+            if (CanPlay(target.Coord.X, target.Coord.Y))
+		    {
+                target.Owner = m.Player;
+                this.MoveList.Push(m);
+                // Groupes
+                var friends = GetAround(target).FindAll(i => i.Owner == target.Owner);
 
-			Groupe g = new Groupe {target};
-				foreach(var fr in friends)
-				{
-					if(GetGroupe(fr) != null)
-					{
-						g.AddRange(GetGroupe(fr));
-						this.Groupes.Remove(GetGroupe(fr));
-					}
-				}
-			this.Groupes.Add (g);
+                Groupe g = new Groupe { target };
+                foreach (var fr in friends)
+                {
+                    if (GetGroupe(fr) != null)
+                    {
+                        g.AddRange(GetGroupe(fr));
+                        this.Groupes.Remove(GetGroupe(fr));
+                    }
+                }
+                this.Groupes.Add(g);
+		    }
+			
 		}
 
 		Groupe GetGroupe(Intersection i)

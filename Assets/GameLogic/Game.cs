@@ -1,12 +1,22 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Assets.GameUtils;
 using Assets.GameUtils.Sgf;
 using Assets.ObjetsDeJeu;
+using DbGobansContext;
 
 namespace Assets.GameLogic
 {
 	public class Game
 	{
+	    public static Game Instance
+	    {
+	        get { return _instance; }
+	        set { _instance = value; }
+	    }
+
+        private static Game _instance;
+
 		private Player _whitePlayer;
 		private Player _blackPlayer;
 		private Player _currPlayer;
@@ -15,7 +25,8 @@ namespace Assets.GameLogic
         public string Status { get; set; }
         private IUiManager UIManager;
 		private ScoreCalculator _scalc;
-		public double WhiteScore { get; set; }
+	    
+	    public double WhiteScore { get; set; }
 		public double BlackScore { get; set; }
 		
 		public Game(int size, Player whitePlayer, Player blackPlayer)
@@ -28,6 +39,19 @@ namespace Assets.GameLogic
 			this.Status = "playing";
 			_scalc = new ScoreCalculator (_whitePlayer,_blackPlayer);
 		}
+
+        public Game (string path)
+        {
+            var file = new SgfFile(path);
+            Goban = new Goban(file.Header.Size);
+            WhitePlayer = file.Header.WhitePlayer;
+            BlackPlayer = file.Header.BlackPlayer;
+            this.CurrentPlayer = file.Moves.First().Player;
+            foreach (var move in file.Moves)
+            {
+                this.Goban.PutRock(move);
+            }
+        }
 		
 		public void PasserTour()
 		{
@@ -41,27 +65,28 @@ namespace Assets.GameLogic
 				this.Update();
 			}
 		}
+        
 		public void EndGame()
 		{
-
 			_scalc.CalculateFinalScore (this.Goban,true);
 			this.BlackScore = _scalc.BlackFinalScore;
 			this.WhiteScore = _scalc.WhiteFinalScore;
 			this.Status = "over";
 		}
+
 		public void Update()
 		{
 			if(this.Status == "playing")
 			{
-				//Si il y a des randoms IA on les fait jouer !!!
-				RandomIaPlayer player = CurrentPlayer as RandomIaPlayer;
-				int nbEssais = 0;
-				if(player != null)
+
+				var randomPlayer = CurrentPlayer as RandomIaPlayer;
+				var nbEssais = 0;
+				if(randomPlayer != null)
 				{
 					Coordonnees c = null;
 					do
 					{
-						c = player.GetBestMove(this.Goban);
+						c = randomPlayer.GetBestMove(this.Goban);
 						nbEssais++;
 					} while (!Goban.CanPlay(c.X, c.Y) && nbEssais <= 5);
 
@@ -76,13 +101,11 @@ namespace Assets.GameLogic
 					return;
 				}
 
-				//Si il y a des randoms IA on les fait jouer !!!
-				SladIaPlayer player2 = CurrentPlayer as SladIaPlayer;
-				int nbEssaisPute = 0;
-				if(player2 != null)
+				var sladIaPlayer = CurrentPlayer as SladIaPlayer;
+				if(sladIaPlayer != null)
 				{
 					Coordonnees c = null;
-					c = player2.GetBestMove(this.Goban);
+					c = sladIaPlayer.GetBestMove(this.Goban);
 					
 					if(c == null || !Goban.CanPlay(c.X, c.Y))
 					{
@@ -92,23 +115,10 @@ namespace Assets.GameLogic
 						this.PutRock(c.X, c.Y);
 					}
 					NbTour++;
-					return;
 				}
+
 			}
 
-		}
-		
-		public Game(string path)
-		{
-			SgfFile file = new SgfFile(path);
-			Goban = new Goban(file.Header.Size);
-			WhitePlayer = file.Header.WhitePlayer;
-			BlackPlayer = file.Header.BlackPlayer;
-			this.CurrentPlayer = file.Moves.First().Player;
-			foreach(Move move in file.Moves)
-			{
-				this.Goban.PutRock(move);
-			}
 		}
 		
 		public void PutRock(int x, int y)
@@ -120,21 +130,14 @@ namespace Assets.GameLogic
 			    this.UIManager.PoserPion(CurrentPlayer, x, y);
 				this.ChangeCurrentPlayer();
 			}
-			
 		}
 		
-		private void ChangeCurrentPlayer()
+		protected void ChangeCurrentPlayer()
 		{
-			if(this.CurrentPlayer.Equals(WhitePlayer))
-			{
-				this.CurrentPlayer = BlackPlayer;
-			} else
-			{
-				this.CurrentPlayer = WhitePlayer;
-			}
+		    this.CurrentPlayer = this.CurrentPlayer.Equals(WhitePlayer) ? BlackPlayer : WhitePlayer;
 		}
-		
-		public Goban Goban {
+
+	    public Goban Goban {
 			get { return _goban; }
 			set { _goban = value; }
 		}
@@ -153,8 +156,6 @@ namespace Assets.GameLogic
 			get { return _currPlayer; }
 			private set { _currPlayer = value; }
 		}
-
-	    
-	}
+    }
 
 }

@@ -35,6 +35,7 @@
     <NoWarn>0169</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Devart.Data.Linq, Version=4.4.438.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.XML" />
     <Reference Include="System.Core" />
@@ -49,8 +50,13 @@
   <ItemGroup>
     <Compile Include="Assets\Button.cs" />
     <Compile Include="Assets\Case.cs" />
+    <Compile Include="Assets\GameLogic\RemoteGame.cs" />
     <Compile Include="Assets\GameLogic\Game.cs" />
     <Compile Include="Assets\GameLogicDisplay.cs" />
+    <Compile Include="Assets\ObjetsDeJeu\IObservable.cs" />
+    <Compile Include="Assets\ObjetsDeJeu\IObserver.cs" />
+    <Compile Include="Assets\ObjetsDeJeu\RemoteMovesStalker.cs" />
+    <Compile Include="Assets\ObjetsDeJeu\RemotePlayer.cs" />
     <Compile Include="Assets\GameUtils\IUiManager.cs" />
     <Compile Include="Assets\GameUtils\ScoreCalculator.cs" />
     <Compile Include="Assets\GameUtils\Sgf\SgfConst.cs" />
