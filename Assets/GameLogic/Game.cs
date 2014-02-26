@@ -17,14 +17,14 @@ namespace Assets.GameLogic
 
         private static Game _instance;
 
-		private Player _whitePlayer;
-		private Player _blackPlayer;
-		private Player _currPlayer;
-		private Goban _goban;
+		protected Player _whitePlayer;
+		protected Player _blackPlayer;
+		protected Player _currPlayer;
+		protected Goban _goban;
         public int NbTour { get; set; }
         public string Status { get; set; }
-        private IUiManager UIManager;
-		private ScoreCalculator _scalc;
+        protected IUiManager UIManager;
+		protected ScoreCalculator _scalc;
 	    
 	    public double WhiteScore { get; set; }
 		public double BlackScore { get; set; }

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using Assets.GameLogic;
 using DbGobansContext;
 
 namespace Assets.ObjetsDeJeu
@@ -18,7 +13,8 @@ namespace Assets.ObjetsDeJeu
 
         public RemoteMovesStalker (DbGoban goban)
         {
-            goban.DbPions.ListChanged += DbPionsOnListChanged;
+            _observed = goban;
+            _observed.DbPions.ListChanged += DbPionsOnListChanged;
         }
 
         private void DbPionsOnListChanged (object sender, ListChangedEventArgs listChangedEventArgs)
@@ -29,7 +25,6 @@ namespace Assets.ObjetsDeJeu
                 LastCoupPlayed = baseLastCoup;
                 Observers.ForEach(obs => obs.ObservedNotified(this));
             }
-            
         }
     }
 }
