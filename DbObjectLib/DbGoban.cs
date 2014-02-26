@@ -13,6 +13,7 @@ namespace DbGobansContext
         public DbPion GetLastCoup()
         {
             int? maxCoup = this.DbPions.Max(pion => pion.NumeroCoup);
+            //int? maxCoup = this.DbPions.Max(pion => pion.HeurePion);
             if (maxCoup.HasValue)
             {
                 DbPion firstOrDefault = this.DbPions.FirstOrDefault(pion => pion.NumeroCoup == maxCoup);
@@ -28,7 +29,7 @@ namespace DbGobansContext
         public DbPion PoserPion (int x, int y, string playerColor)
         {
             Debug.WriteLine(string.Format("Inserting pion at {{{0},{1}}} from {2}", x, y, playerColor));
-            DbPion pion = new DbPion {DbGoban = this, PositionX = (byte) x, PositionY = (byte) y, Pioncol = playerColor};
+            DbPion pion = new DbPion {DbGoban = this, PositionX = (byte) x, PositionY = (byte) y, Pioncol = playerColor, HeurePion = DateTime.Now};
             return pion;
         }
     }

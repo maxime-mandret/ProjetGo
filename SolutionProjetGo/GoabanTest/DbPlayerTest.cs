@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DbGobansContext;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -11,51 +12,57 @@ namespace GoabanTest
         [TestMethod]
         public void ConnectOrCreateTest()
         {
+            // Joueur
             const string playerName = "Test Player";
-
-            DbJoueur joueur = DbJoueur.ConnectOrCreatePlayer(playerName, Context);
+            var joueur = DbJoueur.ConnectOrCreatePlayer(playerName, Context);
             Context.SubmitChanges();
-            Assert.IsTrue(Context.DbJoueurs.Count(player => player.Nom == playerName) > 0);
-            Assert.IsNotNull(joueur);
-            
+
+            // Recuperation du joueur
+            var basePlayer = Context.DbJoueurs.FirstOrDefault(player => player.Nom == playerName);
+
+            // Suppresion des données de test
             Context.DbJoueurs.DeleteOnSubmit(joueur);
             Context.SubmitChanges();
+
+            // Tests
+            Assert.IsNotNull(joueur);
+            Assert.IsNotNull(basePlayer); 
         }
 
         [TestMethod]
         public void GetCurrentGamesTest()
         {
-            DbJoueur boby = new DbJoueur { Nom = "Boby" };
-            DbJoueur john = new DbJoueur { Nom = "Boby" };
-            DbJoueur paul = new DbJoueur { Nom = "Boby" };
-            
+            // Joueurs
+            var boby = new DbJoueur { Nom = "Boby" };
+            var john = new DbJoueur { Nom = "John" };
+            var paul = new DbJoueur { Nom = "Paul" };
+            var js = new List<DbJoueur>{boby, john, paul};
 
-            DbPartie partie1 = new DbPartie {DbJoueurs_IdJoueurBlanc = boby, DbJoueurs_IdJoueurNoir = john, HeureDebut = DateTime.Now};
-            DbPartie partie2 = new DbPartie { DbJoueurs_IdJoueurNoir = boby, DbJoueurs_IdJoueurBlanc = paul, HeureDebut = DateTime.Now };
-            DbPartie partie3 = new DbPartie { DbJoueurs_IdJoueurBlanc = boby, DbJoueurs_IdJoueurNoir = john, HeureDebut = DateTime.Now };
-            
+            // Parties
+            var partie1 = new DbPartie {DbJoueurs_IdJoueurBlanc = boby, DbJoueurs_IdJoueurNoir = john, HeureDebut = DateTime.Now};
+            var partie2 = new DbPartie { DbJoueurs_IdJoueurNoir = boby, DbJoueurs_IdJoueurBlanc = paul, HeureDebut = DateTime.Now };
+            var partie3 = new DbPartie { DbJoueurs_IdJoueurBlanc = boby, DbJoueurs_IdJoueurNoir = john, HeureDebut = DateTime.Now };
+            var ps = new List<DbPartie>{partie1, partie2, partie3};
 
-            Context.DbJoueurs.InsertOnSubmit(boby);
-            Context.DbJoueurs.InsertOnSubmit(john);
-            Context.DbJoueurs.InsertOnSubmit(paul);
-            Context.DbParties.InsertOnSubmit(partie1);
-            Context.DbParties.InsertOnSubmit(partie2);
-            Context.DbParties.InsertOnSubmit(partie3);
-
+            // Insertion
+            Context.DbJoueurs.InsertAllOnSubmit(js);
+            Context.DbParties.InsertAllOnSubmit(ps);
             Context.SubmitChanges();
 
-            Assert.IsTrue(boby.GetCurrentGames().Count == 3);
-            Assert.IsTrue(john.GetCurrentGames().Count == 2);
-            Assert.IsTrue(paul.GetCurrentGames().Count == 1);
+            // Récuperation des parties en cours
+            var bobyCount = boby.GetCurrentGames().Count;
+            var johnCount = john.GetCurrentGames().Count;
+            var paulCount = paul.GetCurrentGames().Count;
 
-            Context.DbParties.DeleteOnSubmit(partie1);
-            Context.DbParties.DeleteOnSubmit(partie2);
-            Context.DbParties.DeleteOnSubmit(partie3);
-            Context.DbJoueurs.DeleteOnSubmit(boby);
-            Context.DbJoueurs.DeleteOnSubmit(john);
-            Context.DbJoueurs.DeleteOnSubmit(paul);
-
+            // Suppression des données de test
+            Context.DbParties.DeleteAllOnSubmit(ps);
+            Context.DbJoueurs.DeleteAllOnSubmit(js);
             Context.SubmitChanges();
+
+            // Tests
+            Assert.IsTrue(bobyCount == 3);
+            Assert.IsTrue(johnCount == 2);
+            Assert.IsTrue(paulCount == 1);
         }
     }
 }

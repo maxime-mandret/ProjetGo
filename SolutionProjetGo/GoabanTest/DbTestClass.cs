@@ -9,14 +9,14 @@ namespace GoabanTest
         public DbGobansDataContext Context { get; set; }
 
         [TestInitialize]
-        public void init()
+        public void Init()
         {
             Debug.WriteLine("Initializing test");
             this.Context = new DbGobansDataContext();
         }
 
         [TestCleanup]
-        public void cleanup()
+        public void Cleanup()
         {
             Debug.WriteLine("Cleaning test");
             Context.RejectChanges();

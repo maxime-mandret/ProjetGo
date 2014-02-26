@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using DbGobansContext;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -11,42 +12,40 @@ namespace GoabanTest
         [TestMethod]
         public void TestGetPendingGames()
         {
+            // Joueurs
+            var noir = new DbJoueur { Nom = "Noir" };
+            var blanc = new DbJoueur { Nom = "Blanc" };
 
-            DbPartie p1 = getDummyPartie();
-            p1.DbJoueurs_IdJoueurBlanc = null;
-            DbPartie p2 = getDummyPartie();
-            DbPartie p3 = getDummyPartie();
-            DbPartie p4 = getDummyPartie();
-            p4.DbJoueurs_IdJoueurBlanc = null;
+            // Parties
+            var p1 = new DbPartie { DbJoueurs_IdJoueurNoir = noir };
+            var p2 = new DbPartie { DbJoueurs_IdJoueurNoir = noir };
+            var p3 = new DbPartie { DbJoueurs_IdJoueurNoir = noir, DbJoueurs_IdJoueurBlanc = blanc };
+            var p4 = new DbPartie { DbJoueurs_IdJoueurNoir = noir };
+            var parties = new List<DbPartie> { p1, p2, p3, p4 };
 
-            Context.DbParties.InsertOnSubmit(p1);
-            Context.DbParties.InsertOnSubmit(p2);
-            Context.DbParties.InsertOnSubmit(p3);
-            Context.DbParties.InsertOnSubmit(p4);
-
+            //Insertion en base
+            Context.DbParties.InsertAllOnSubmit(parties);
             Context.SubmitChanges();
 
+            // Récupération des parties en attente de joueurs
             var pending = DbPartie.GetPendingGames(Context);
 
-            Context.DbParties.DeleteOnSubmit(p1);
-            Context.DbParties.DeleteOnSubmit(p2);
-            Context.DbParties.DeleteOnSubmit(p3);
-            Context.DbParties.DeleteOnSubmit(p4);
-
-            Context.DbJoueurs.DeleteOnSubmit(p2.DbJoueurs_IdJoueurBlanc);
-            Context.DbJoueurs.DeleteOnSubmit(p2.DbJoueurs_IdJoueurNoir);
-
+            // Suppression
+            Context.DbParties.DeleteAllOnSubmit(parties);
+            Context.DbJoueurs.DeleteOnSubmit(noir);
+            Context.DbJoueurs.DeleteOnSubmit(blanc);
             Context.SubmitChanges();
 
-            Assert.AreEqual(2, pending.Count);
+            // Tests
+            Assert.AreEqual(3, pending.Count);
         }
 
         [TestMethod]
         public void TestAddPlayer ()
         {
-            DbJoueur j1 = new DbJoueur {Nom = "J1"};
-            DbJoueur j2 = new DbJoueur {Nom = "J2"};
-            DbPartie partie = new DbPartie();
+            var j1 = new DbJoueur {Nom = "J1"};
+            var j2 = new DbJoueur {Nom = "J2"};
+            var partie = new DbPartie();
             partie.AddPlayer(j1);
             partie.AddPlayer(j2);
             Assert.AreEqual(j1, partie.DbJoueurs_IdJoueurNoir);
@@ -71,23 +70,22 @@ namespace GoabanTest
         [TestMethod]
         public void TestGetRunningGames ()
         {
-            DbJoueur j1 = new DbJoueur { Nom = "J1" };
-            DbJoueur j2 = new DbJoueur { Nom = "J2" };
+            var j1 = new DbJoueur { Nom = "J1" };
+            var j2 = new DbJoueur { Nom = "J2" };
             
 
-            DbPartie partie1 = new DbPartie();
+            var partie1 = new DbPartie();
             partie1.AddPlayer(j1);
             partie1.AddPlayer(j2);
 
-            DbPartie partie2 = new DbPartie();
+            var partie2 = new DbPartie();
             partie2.AddPlayer(j1);
-            partie2.AddPlayer(j2);
 
-            DbPartie partie3 = new DbPartie();
+            var partie3 = new DbPartie();
             partie3.AddPlayer(j1);
             partie3.AddPlayer(j2); 
 
-            DbPartie partie4 = new DbPartie();
+            var partie4 = new DbPartie();
             partie4.AddPlayer(j1);
             partie4.AddPlayer(j2);
 
@@ -102,12 +100,8 @@ namespace GoabanTest
             Context.SubmitChanges();
 
             var runningGames = DbPartie.GetAllRunningGames(Context);
-            Assert.AreEqual(4, runningGames.Count);
-            Debug.WriteLine(runningGames.Count + " running games found");
-            foreach (DbPartie game in runningGames)
-            {
-                Debug.WriteLine("Id Partie : " + game.IdPartie);
-            }
+            
+            
             Context.DbJoueurs.DeleteOnSubmit(j1);
             Context.DbJoueurs.DeleteOnSubmit(j2);
 
@@ -117,19 +111,8 @@ namespace GoabanTest
             Context.DbParties.DeleteOnSubmit(partie4);
 
             Context.SubmitChanges();
-        }
 
-        private DbPartie getDummyPartie ()
-        {
-            DbJoueur noir = new DbJoueur { Nom = "Noir" };
-            DbJoueur blanc = new DbJoueur { Nom = "Blanc" };
-            DbPartie partie = new DbPartie
-            {
-                DbJoueurs_IdJoueurNoir = noir,
-                DbJoueurs_IdJoueurBlanc = blanc,
-            };
-
-            return partie;
+            Assert.AreEqual(3, runningGames.Count);
         }
     }
 }
