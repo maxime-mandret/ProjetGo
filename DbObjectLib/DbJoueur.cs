@@ -36,5 +36,12 @@ namespace DbGobansContext
                 return player;
             }
         }
+
+        public DbPartie CreateGame()
+        {
+            DbPartie partie = new DbPartie {DbJoueurs_IdJoueurNoir = this};
+            DbParties_IdJoueurNoir.Add(partie);
+            return partie;
+        }
     }
 }

@@ -29,7 +29,6 @@ namespace DbGobansContext
         {
             Debug.WriteLine(string.Format("Inserting pion at {{{0},{1}}} from {2}", x, y, playerColor));
             DbPion pion = new DbPion {DbGoban = this, PositionX = (byte) x, PositionY = (byte) y, Pioncol = playerColor};
-            this.DbPions.Add(pion);
             return pion;
         }
     }
