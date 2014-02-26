@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-vs", "..\As
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbObjectLib", "..\DbObjectLib\DbObjectLib.csproj", "{E96184BD-18D7-4207-94DF-194768AD6899}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoabanTest", "GoabanTest\GoabanTest.csproj", "{8BE81F3C-93D1-47B9-9A95-E076B59CA0E5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoabanDbTest", "GoabanTest\GoabanDbTest.csproj", "{8BE81F3C-93D1-47B9-9A95-E076B59CA0E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
