@@ -25,13 +25,20 @@ namespace Assets.GameUtils
         }
 		public bool CalculateFinalScore(Goban goban, bool display = false)
 		{
+			//On élimine d'abord les groupes morts
 			foreach (Groupe g in goban.Groupes) {
-				Groupe prisoniers = g.getPrisoners(goban);
-				foreach(Intersection i in prisoniers)
+				if(!g.isAlive(goban))
 				{
-					ui.deletePion(i.Coord.X,i.Coord.Y);
+					//Groupe à suppriemer et on reset les owner ?
+					foreach(Intersection i in g)
+					{
+						ui.deletePion(i.Coord.X,i.Coord.Y);
+					}
+				}else
+				{
+					//TODO rien faire ici et refaire du case par case avec 3 mini
+					this.ajoutPoint(g);
 				}
-				this.ajoutPoint(g);
 			}
 			return true;
 		}

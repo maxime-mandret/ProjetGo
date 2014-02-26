@@ -62,12 +62,12 @@ namespace Assets.ObjetsDeJeu
 			return l.FindAll(i => i != null);
 		}
 
-		List<Intersection> GetLibertes(Intersection inter)
+		public List<Intersection> GetLibertes(Intersection inter)
 		{
 			return GetAround(inter).FindAll(i => i.Owner != null);
 		}
 		
-		private bool IsAtari(Intersection inter)
+		public bool IsAtari(Intersection inter)
 		{
 			return GetAround(inter).TrueForAll(i => i.Owner != inter.Owner);
 		}
