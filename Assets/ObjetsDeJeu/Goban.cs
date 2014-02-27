@@ -64,12 +64,12 @@ namespace Assets.ObjetsDeJeu
 
 		public List<Intersection> GetLibertes(Intersection inter)
 		{
-			return GetAround(inter).FindAll(i => i.Owner != null);
+			return GetAround(inter).FindAll(i => i.Owner == null);
 		}
 		
 		public bool IsAtari(Intersection inter)
 		{
-			return GetAround(inter).TrueForAll(i => i.Owner != inter.Owner);
+			return GetAround(inter).TrueForAll(i => i.Owner != inter.Owner && i.Owner != null);
 		}
 
 		private bool Owned(Intersection i)

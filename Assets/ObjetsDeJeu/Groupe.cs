@@ -11,15 +11,16 @@ namespace Assets.ObjetsDeJeu
 		{
 			bool alive = true;
 			//Player p = this[0].Owner;
+			int totalibs = 0;
 			if(isAtari(goban))
 			{
 				alive = false;
 			}else
 			{
-				int freelibs = 0;
+				List<Intersection> freelibs = new List<Intersection>();
 				foreach(Intersection i in this)
 				{
-					List<Intersection> libertes = goban.GetLibertes(i);
+					freelibs.AddRange(goban.GetLibertes(i));
 //					foreach(Intersection lib in libertes)
 //					{
 //						List<Intersection> tmp = goban.GetAround(lib);
@@ -47,14 +48,16 @@ namespace Assets.ObjetsDeJeu
 //							}
 //						}
 //					}
-					Debug.Log("x: "+i.Coord.X+" y: "+i.Coord.Y+" libs: "+libertes.Count);
-					freelibs+=libertes.Count;
+					Debug.Log("x: "+i.Coord.X+" y: "+i.Coord.Y+" libs: "+goban.GetLibertes(i).Count);
 				}
-				if(freelibs<2)
+				if(freelibs.Count<2)
 				{
 					alive = false;
 				}
+				totalibs = freelibs.Count;
 			}
+			
+			Debug.Log("-- groupe "+((alive==true)?"vivant":"mort")+" avec "+totalibs+" libertes");
 			return alive;
 		}
 		

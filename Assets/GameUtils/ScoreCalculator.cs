@@ -40,7 +40,6 @@ namespace Assets.GameUtils
 					foreach(Intersection i in g)
 					{
 						ui.deletePion(i.Coord.X,i.Coord.Y);
-						i.Owner = null;
 					}
 				}else
 				{

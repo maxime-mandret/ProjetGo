@@ -3,7 +3,7 @@ using System.Linq;
 using Assets.GameUtils;
 using Assets.GameUtils.Sgf;
 using Assets.ObjetsDeJeu;
-//using DbGobansContext;
+using DbGobansContext;
 
 namespace Assets.GameLogic
 {
@@ -88,7 +88,7 @@ namespace Assets.GameLogic
 					{
 						c = randomPlayer.GetBestMove(this.Goban);
 						nbEssais++;
-					} while (!Goban.CanPlay(c.X, c.Y) && nbEssais <= 5);
+					} while (!Goban.CanPlay(c.X, c.Y) && nbEssais <= 20);
 
 					if(!Goban.CanPlay(c.X, c.Y))
 					{
