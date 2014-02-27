@@ -137,14 +137,18 @@ namespace Assets.ObjetsDeJeu
                 var friends = GetAround(target).FindAll(i => i.Owner == target.Owner);
 
                 Groupe g = new Groupe { target };
-                foreach (var fr in friends)
-                {
-                    if (GetGroupe(fr) != null)
-                    {
-                        g.AddRange(GetGroupe(fr));
-                        this.Groupes.Remove(GetGroupe(fr));
-                    }
-                }
+				foreach (Intersection fr in friends)
+				{
+					var group = GetGroupe(fr);
+					if(group != null)
+						g.AddRange(group);
+				}
+				foreach (Intersection fr in friends)
+				{
+					var group = GetGroupe(fr);
+					if(group != null)
+						this.Groupes.Remove(group);
+				}
                 this.Groupes.Add(g);
 		    }
 			
@@ -152,7 +156,7 @@ namespace Assets.ObjetsDeJeu
 
 		Groupe GetGroupe(Intersection i)
 		{
-			return this.Groupes.First(g => g.Contains(i));
+			return this.Groupes.FirstOrDefault(g => g.Contains(i));;
 		}
 
 

@@ -10,7 +10,7 @@ namespace Assets.ObjetsDeJeu
 		public bool isAlive(Goban goban)
 		{
 			bool alive = true;
-			Player p = this[0].Owner;
+			//Player p = this[0].Owner;
 			if(isAtari(goban))
 			{
 				alive = false;
@@ -20,33 +20,35 @@ namespace Assets.ObjetsDeJeu
 				foreach(Intersection i in this)
 				{
 					List<Intersection> libertes = goban.GetLibertes(i);
-					foreach(Intersection lib in libertes)
-					{
-						List<Intersection> tmp = goban.GetAround(i);
-						if(tmp.Count>0)
-						{
-							int pn = 0;
-							int an = 0;
-							int n = 0;
-							foreach(Intersection ii in tmp)
-							{
-								if(ii.Owner == null)
-								{
-									n++;
-								}else if(ii.Owner == p)
-								{
-									pn++;
-								}else if(ii.Owner != p)
-								{
-									an++;
-								}
-							}
-							if(pn>an)
-							{
-								freelibs++;
-							}
-						}
-					}
+//					foreach(Intersection lib in libertes)
+//					{
+//						List<Intersection> tmp = goban.GetAround(lib);
+//						if(tmp.Count>0)
+//						{
+//							int pn = 0;
+//							int an = 0;
+//							int n = 0;
+//							foreach(Intersection ii in tmp)
+//							{
+//								if(ii.Owner == null)
+//								{
+//									n++;
+//								}else if(ii.Owner == p)
+//								{
+//									pn++;
+//								}else if(ii.Owner != p)
+//								{
+//									an++;
+//								}
+//							}
+//							if(pn>an || n > an)
+//							{
+//								freelibs++;
+//							}
+//						}
+//					}
+					Debug.Log("x: "+i.Coord.X+" y: "+i.Coord.Y+" libs: "+libertes.Count);
+					freelibs+=libertes.Count;
 				}
 				if(freelibs<2)
 				{

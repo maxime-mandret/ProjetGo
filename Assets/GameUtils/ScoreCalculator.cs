@@ -30,9 +30,17 @@ namespace Assets.GameUtils
 				if(!g.isAlive(goban))
 				{
 					//Groupe à suppriemer et on reset les owner ?
+					if(g[0].Owner == _whitePlayer)
+					{
+						BlackFinalScore += g.Count;
+					}else
+					{
+						WhiteFinalScore += g.Count;
+					}
 					foreach(Intersection i in g)
 					{
 						ui.deletePion(i.Coord.X,i.Coord.Y);
+						i.Owner = null;
 					}
 				}else
 				{
@@ -40,6 +48,7 @@ namespace Assets.GameUtils
 					this.ajoutPoint(g);
 				}
 			}
+			
 			return true;
 		}
 
