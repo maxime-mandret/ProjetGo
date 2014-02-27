@@ -789,8 +789,8 @@
               </Model>
             </Children>
             <Location>
-              <X>720 px</X>
-              <Y>128 px</Y>
+              <X>768 px</X>
+              <Y>120 px</Y>
             </Location>
             <Size>
               <Width>150 px</Width>
@@ -894,7 +894,7 @@
               </PointD>
               <PointD>
                 <X>666 px</X>
-                <Y>247.742268041238 px</Y>
+                <Y>239.742268041238 px</Y>
               </PointD>
             </BendPoints>
             <IsManuallyRouted>false</IsManuallyRouted>
@@ -991,7 +991,7 @@
           <ScaleMode>Free</ScaleMode>
           <Scale>1</Scale>
           <Location>
-            <X>181 px</X>
+            <X>-198 px</X>
             <Y>55 px</Y>
           </Location>
         </ViewPort>
