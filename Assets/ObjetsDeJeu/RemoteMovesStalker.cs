@@ -4,7 +4,7 @@ using DbGobansContext;
 
 namespace Assets.ObjetsDeJeu
 {
-    public class RemoteMovesStalker : IObservable<RemoteMovesStalker>
+    public class RemoteMovesStalker
     {
         private DbGoban _observed;
         public DbPion LastCoupPlayed { get; set; }

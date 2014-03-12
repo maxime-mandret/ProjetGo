@@ -54,6 +54,7 @@
     <Compile Include="Assets\Button.cs" />
     <Compile Include="Assets\Case.cs" />
     <Compile Include="Assets\GameLogic\Game.cs" />
+    <Compile Include="Assets\ObjetsDeJeu\IObserver.cs" />
     <Compile Include="Assets\GameLogic\RemoteGame.cs" />
     <Compile Include="Assets\GameLogicDisplay.cs" />
     <Compile Include="Assets\GameUtils\IUiManager.cs" />
@@ -69,8 +70,6 @@
     <Compile Include="Assets\ObjetsDeJeu\Goban.cs" />
     <Compile Include="Assets\ObjetsDeJeu\Groupe.cs" />
     <Compile Include="Assets\ObjetsDeJeu\IAPlayer.cs" />
-    <Compile Include="Assets\ObjetsDeJeu\IObservable.cs" />
-    <Compile Include="Assets\ObjetsDeJeu\IObserver.cs" />
     <Compile Include="Assets\ObjetsDeJeu\Intersection.cs" />
     <Compile Include="Assets\ObjetsDeJeu\MinMax.cs" />
     <Compile Include="Assets\ObjetsDeJeu\Move.cs" />

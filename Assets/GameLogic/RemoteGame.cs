@@ -15,19 +15,28 @@ namespace Assets.GameLogic
         private EventWaitHandle remotePlayerPlayed = new EventWaitHandle(false, EventResetMode.AutoReset);
         private RemoteMovesStalker moveStalker;
 
-        public RemoteGame (int size, Player whitePlayer, Player blackPlayer)
+        private DbPartie dbPartie;
+
+        public RemoteGame (int size, Player blackPlayer, Player whitePlayer = null)
             : base(size, whitePlayer, blackPlayer)
         {
             this.ApplicationDataContext = new DbGobansDataContext();
 
-            // Création en base
-            DbJoueur white = DbJoueur.ConnectOrCreatePlayer(whitePlayer.Name, ApplicationDataContext);
             DbJoueur black = DbJoueur.ConnectOrCreatePlayer(blackPlayer.Name, ApplicationDataContext);
-            DbPartie partie = new DbPartie { DbJoueurs_IdJoueurBlanc = white, DbJoueurs_IdJoueurNoir = black };
+            DbPartie partie = new DbPartie { DbJoueurs_IdJoueurNoir = black };
+            // Création en base
+            if (whitePlayer != null)
+            {
+                DbJoueur white = DbJoueur.ConnectOrCreatePlayer(whitePlayer.Name, ApplicationDataContext);
+                this.ApplicationDataContext.DbJoueurs.InsertOnSubmit(white);
+                partie.DbJoueurs_IdJoueurBlanc = white;
+            }
+
             DbGoban goban = new DbGoban { DbPartie = partie, JoueurEnCour = partie.IdJoueurNoir };
-            this.ApplicationDataContext.DbJoueurs.InsertOnSubmit(white);
+            
             this.ApplicationDataContext.DbJoueurs.InsertOnSubmit(black);
             this.ApplicationDataContext.DbParties.InsertOnSubmit(partie);
+            this.dbPartie = partie;
             this.ApplicationDataContext.DbGobans.InsertOnSubmit(goban);
             this.ApplicationDataContext.SubmitChanges();
             moveStalker = new RemoteMovesStalker(goban);
@@ -103,12 +112,11 @@ namespace Assets.GameLogic
 
         #region IObserver<RemoteMovesStalker> Membres
 
-        public void ObservedNotified<RemoteMovesStalker> (RemoteMovesStalker observedState)
+        public void ObservedNotified(RemoteMovesStalker remoteMovesStalker)
         {
             remotePlayerPlayed.Set();
         }
 
         #endregion
     }
-
 }
