@@ -16,8 +16,8 @@ namespace Assets.ObjetsDeJeu
 			{
 				if(goban.MoveList.Count() < 20 && Random.Range(0, 3) == 1)
 				{
-					int rx = Random.Range(0, _width);
-					int ry = Random.Range(0, _height);
+					int rx = Random.Range(0, goban.Size);
+                    int ry = Random.Range(0, goban.Size);
 					return new Coordonnees(rx, ry);
 				} else
 				{
@@ -28,8 +28,8 @@ namespace Assets.ObjetsDeJeu
 				}
 			} else
 			{
-				int rx = Random.Range(0, _width);
-				int ry = Random.Range(0, _height);
+                int rx = Random.Range(0, goban.Size);
+                int ry = Random.Range(0, goban.Size);
 				return new Coordonnees(rx, ry);
 			}
 		}

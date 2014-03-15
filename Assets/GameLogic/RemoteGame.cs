@@ -17,6 +17,7 @@ namespace Assets.GameLogic
 
         private DbPartie dbPartie;
 
+        // Creation Partie
         public RemoteGame (int size, Player blackPlayer, Player whitePlayer = null)
             : base(size, whitePlayer, blackPlayer)
         {
@@ -46,19 +47,41 @@ namespace Assets.GameLogic
             moveStalker.Observers.Add(this);
         }
 
-        //public RemoteGame (DbGoban goban)
-        //{
-        //    this.ApplicationDataContext = new DbGobansDataContext();
+        //Rejoindre déjà commencée
+        public RemoteGame (DbPartie partie)
+            : base(9, ToLocalPlayerModel(partie.DbJoueurs_IdJoueurBlanc, PlayerColor.White), ToLocalPlayerModel(partie.DbJoueurs_IdJoueurNoir, PlayerColor.Black))
+        {
+            this.ApplicationDataContext = new DbGobansDataContext();
+            this.dbPartie = partie;
 
-        //    // Récupération des coups
-        //    foreach (DbPion dbPion in goban.DbPions.OrderBy(p => p.NumeroCoup))
-        //    {
-        //        // Méthode classe mère car on ne sauvegarde pas le mouvement (vu qu'il existe deja)
-        //        base.PutRock(dbPion.PositionX, dbPion.PositionY);
-        //    }            
+            // Récupération des coups
+            foreach (DbCoup dbCoup in this.dbPartie.DbCoups.OrderBy(p => p.HeureCoup))
+            {
+                // Méthode classe mère car on ne sauvegarde pas le mouvement (vu qu'il existe deja)
+                if (dbCoup.X.HasValue && dbCoup.Y.HasValue)
+                {
+                    //var player = dbCoup.IdJoueur == dbCoup.DbPartie.IdJoueurBlanc
+                    //    ? this.WhitePlayer
+                    //    : this.BlackPlayer;
 
-        //    moveStalker = new RemoteMovesStalker(goban);
-        //}
+                    //this.UIManager.PoserPion(player, (int)dbCoup.X.Value, (int)dbCoup.Y);
+                    base.PutRock((int)dbCoup.X.Value, (int)dbCoup.Y);
+                }
+                else
+                {
+                    base.PasserTour();
+                }
+                
+            }
+            
+            moveStalker = new RemoteMovesStalker(this.dbPartie);
+            moveStalker.Observers.Add(this);
+        }
+
+        private static Player ToLocalPlayerModel (DbJoueur dbJoueur, PlayerColor playerColor)
+        {
+            return new Player(dbJoueur.Nom, playerColor);
+        }
 
         public void EndGame ()
         {
@@ -82,15 +105,7 @@ namespace Assets.GameLogic
             this.dbPartie.PoserPion(x, y, player);
             ApplicationDataContext.SubmitChanges();
             //}
-
-
         }
-
-        //protected void ChangeCurrentPlayer ()
-        //{
-        //    base.ChangeCurrentPlayer();
-        //    // Enregistrer en base
-        //}
 
         public void PasserTour ()
         {
