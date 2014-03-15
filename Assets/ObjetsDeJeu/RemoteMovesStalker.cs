@@ -6,21 +6,21 @@ namespace Assets.ObjetsDeJeu
 {
     public class RemoteMovesStalker
     {
-        private DbGoban _observed;
-        public DbPion LastCoupPlayed { get; set; }
+        private DbPartie _observed;
+        public DbCoup LastCoupPlayed { get; set; }
 
         public List<IObserver<RemoteMovesStalker>> Observers { get; set; }
 
-        public RemoteMovesStalker (DbGoban goban)
+        public RemoteMovesStalker (DbPartie partie)
         {
-            _observed = goban;
-            _observed.DbPions.ListChanged += DbPionsOnListChanged;
+            _observed = partie;
+            _observed.DbCoups.ListChanged += DbPionsOnListChanged;
         }
 
         private void DbPionsOnListChanged (object sender, ListChangedEventArgs listChangedEventArgs)
         {
             var baseLastCoup = _observed.GetLastCoup();
-            if (baseLastCoup.NumeroCoup > LastCoupPlayed.NumeroCoup)
+            if (baseLastCoup.HeureCoup > LastCoupPlayed.HeureCoup)
             {
                 LastCoupPlayed = baseLastCoup;
                 Observers.ForEach(obs => obs.ObservedNotified(this));

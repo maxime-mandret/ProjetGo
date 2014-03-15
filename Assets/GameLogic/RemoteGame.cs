@@ -23,23 +23,26 @@ namespace Assets.GameLogic
             this.ApplicationDataContext = new DbGobansDataContext();
 
             DbJoueur black = DbJoueur.ConnectOrCreatePlayer(blackPlayer.Name, ApplicationDataContext);
-            DbPartie partie = new DbPartie { DbJoueurs_IdJoueurNoir = black };
+            DbPartie partie = new DbPartie { DbJoueurs_IdJoueurNoir = black, HeureDebut = DateTime.Now };
             // Création en base
             if (whitePlayer != null)
             {
                 DbJoueur white = DbJoueur.ConnectOrCreatePlayer(whitePlayer.Name, ApplicationDataContext);
-                this.ApplicationDataContext.DbJoueurs.InsertOnSubmit(white);
                 partie.DbJoueurs_IdJoueurBlanc = white;
+                this.Status = "playing";
+                dbPartie.EtatPartie = "playing";
+            }
+            else
+            {
+                this.Status = "pending";
+                dbPartie.EtatPartie = "pending";
             }
 
-            DbGoban goban = new DbGoban { DbPartie = partie, JoueurEnCour = partie.IdJoueurNoir };
-            
-            this.ApplicationDataContext.DbJoueurs.InsertOnSubmit(black);
             this.ApplicationDataContext.DbParties.InsertOnSubmit(partie);
             this.dbPartie = partie;
-            this.ApplicationDataContext.DbGobans.InsertOnSubmit(goban);
+
             this.ApplicationDataContext.SubmitChanges();
-            moveStalker = new RemoteMovesStalker(goban);
+            moveStalker = new RemoteMovesStalker(this.dbPartie);
             moveStalker.Observers.Add(this);
         }
 
@@ -60,7 +63,12 @@ namespace Assets.GameLogic
         public void EndGame ()
         {
             base.EndGame();
-            // 
+            this.dbPartie.EtatPartie = "over";
+            //using (DbGobansDataContext context = ApplicationDataContext)
+            //{
+            this.dbPartie.EtatPartie = "over";
+            ApplicationDataContext.SubmitChanges();
+            //}
             this.ApplicationDataContext.Dispose();
         }
 
@@ -68,19 +76,32 @@ namespace Assets.GameLogic
         {
             base.PutRock(x, y);
             // Enregistrer en base
+            //using (DbGobansDataContext context = this.ApplicationDataContext)
+            //{
+            var player = DbJoueur.ConnectOrCreatePlayer(this.CurrentPlayer.Name, ApplicationDataContext);
+            this.dbPartie.PoserPion(x, y, player);
+            ApplicationDataContext.SubmitChanges();
+            //}
+
 
         }
 
-        protected void ChangeCurrentPlayer ()
-        {
-            base.ChangeCurrentPlayer();
-            // Enregistrer en base
-        }
+        //protected void ChangeCurrentPlayer ()
+        //{
+        //    base.ChangeCurrentPlayer();
+        //    // Enregistrer en base
+        //}
 
         public void PasserTour ()
         {
             base.PasserTour();
             // Enregistrer en base
+            //using (DbGobansDataContext context = this.ApplicationDataContext)
+            //{
+            var player = DbJoueur.ConnectOrCreatePlayer(this.CurrentPlayer.Name, ApplicationDataContext);
+            this.dbPartie.PasserTour(player);
+            ApplicationDataContext.SubmitChanges();
+            //}
         }
 
         public void Update ()
@@ -92,9 +113,16 @@ namespace Assets.GameLogic
                 if (remotePlayer != null)
                 {
                     remotePlayerPlayed.WaitOne();
-                    DbPion lastCoup = moveStalker.LastCoupPlayed;
+                    DbCoup lastCoup = moveStalker.LastCoupPlayed;
                     // Jouer le coup sur l'interface
-                    this.UIManager.PoserPion(remotePlayer, lastCoup.PositionX, lastCoup.PositionY);
+                    if (lastCoup.X.HasValue && lastCoup.Y.HasValue)
+                    {
+                        this.UIManager.PoserPion(remotePlayer, (int)lastCoup.X.Value, (int)lastCoup.Y);
+                    }
+                    else
+                    {
+                        base.PasserTour();
+                    }
                 }
 
             }
@@ -112,7 +140,7 @@ namespace Assets.GameLogic
 
         #region IObserver<RemoteMovesStalker> Membres
 
-        public void ObservedNotified(RemoteMovesStalker remoteMovesStalker)
+        public void ObservedNotified (RemoteMovesStalker remoteMovesStalker)
         {
             remotePlayerPlayed.Set();
         }

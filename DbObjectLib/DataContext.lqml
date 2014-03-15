@@ -1,49 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Database Name="goban" EntityNamespace="DbGobansContext" ContextNamespace="DbGobansContext" Class="DbGobansDataContext" xmlns:ed="http://devart.com/schemas/EntityDeveloper/1.0" ed:Guid="bcf64ca1-3468-43df-86cf-027bf65377b6" Provider="Devart.Data.MySql.Linq.Provider.MySqlDataProvider, Devart.Data.MySql.Linq" Extended="true" xmlns="http://schemas.devart.com/linqconnect/mapping">
-  <Connection Mode="ConnectionString" ConnectionString="User Id=Epsi5;Password=ProjetJeuDeGo;Host=labo.nantes.epsi.fr;Database=goban;Persist Security Info=True" Provider="Devart.Data.MySql" />
-  <Table Name="goban.Goban" Member="DbGobans">
-    <Type Name="DbGoban" ed:Guid="ab1a9ec5-dd5c-4e53-992e-8595651af9cc">
-      <Column Name="idGoban" Member="IdGoban" Type="System.Int64" AutoSync="OnInsert" DbType="INT(10) UNSIGNED NOT NULL AUTO_INCREMENT" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="True" ed:Guid="9a00c3e5-15d3-48ca-8741-523fd4b8457a" />
-      <Column Name="idPartie" Member="IdPartie" Type="System.Int64" DbType="INT(10) UNSIGNED NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="10" ed:ValidateRequired="True" ed:Guid="017423a9-d8fb-4dd8-b116-3b4a12462c2d" />
-      <Column Name="numeroCoup" Member="NumeroCoup" Type="System.Int64" DbType="INT(10) UNSIGNED NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="10" ed:ValidateRequired="True" ed:Guid="328c6443-d83a-4838-9861-72c22dfe08ab" />
-      <Column Name="natureCoup" Member="NatureCoup" Type="System.String" DbType="ENUM NULL" CanBeNull="true" UpdateCheck="Never" DefaultValue="'Poser'" ed:ValidateRequired="False" ed:Guid="761d4656-2a8c-42e8-adcb-cc87366648c3" />
-      <Column Name="joueurEnCours" Member="JoueurEnCour" Type="System.Int64" DbType="INT(10) UNSIGNED NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="10" ed:ValidateRequired="True" ed:Guid="8b94f635-0226-4d13-81fb-471959ae5698" />
-      <Association Name="DbPartie_DbGoban" ed:AssociationGuid="f464c1f8-7b34-440a-a3f2-f54e122ca620" Member="DbPartie" ed:Guid="2c7c5afe-133f-467e-be88-6e0de2a54aa2" ThisKey="IdPartie" OtherKey="IdPartie" Type="DbPartie" DeleteRule="NO ACTION" IsForeignKey="true" />
-      <Association Name="DbGoban_DbPion" ed:AssociationGuid="5856bc2e-f8de-4120-87bd-370791c887fd" Member="DbPions" ed:Guid="4567777d-72a0-42cf-b2a9-b01df6d215b4" ThisKey="IdGoban" OtherKey="IdGoban" Type="DbPion" />
+  <Connection Mode="ConnectionString" ConnectionString="User Id=root;Host=127.0.0.1;Database=goban;Persist Security Info=True" Provider="Devart.Data.MySql" />
+  <Table Name="goban.coup" Member="DbCoups">
+    <Type Name="DbCoup" ed:Guid="f41e03db-0610-4390-9642-fec1ad59a4e6">
+      <Column Name="idCoup" Member="IdCoup" Type="System.Int64" AutoSync="OnInsert" DbType="INT(10) UNSIGNED NOT NULL AUTO_INCREMENT" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="True" ed:Guid="c48256c1-d17d-4722-943f-39f13f0a0549" />
+      <Column Name="idPartie" Member="IdPartie" Type="System.Int64" DbType="INT(10) UNSIGNED NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="10" ed:ValidateRequired="True" ed:Guid="abe0e188-4fa3-489f-a193-6c60103015a9" />
+      <Column Name="heureCoup" Member="HeureCoup" Type="System.DateTime" DbType="DATETIME NOT NULL" CanBeNull="false" UpdateCheck="Never" ed:ValidateRequired="True" ed:Guid="b01e788d-19ff-4018-9641-140db57c95f9" />
+      <Column Name="idJoueur" Member="IdJoueur" Type="System.Int64" DbType="INT(10) UNSIGNED NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="10" ed:ValidateRequired="True" ed:Guid="32a8651a-ec2e-4852-b801-3c68cf7739c6" />
+      <Column Name="x" Member="X" Type="System.Int64" DbType="INT(2) UNSIGNED NULL" CanBeNull="true" UpdateCheck="Never" Precision="2" ed:ValidateRequired="False" ed:Guid="ddbf7dd9-e387-431a-94ae-a10db30b208e" />
+      <Column Name="y" Member="Y" Type="System.Int64" DbType="INT(2) UNSIGNED NULL" CanBeNull="true" UpdateCheck="Never" Precision="2" ed:ValidateRequired="False" ed:Guid="f8f0c2f3-2c99-48c2-939a-c91d32f38475" />
+      <Association Name="DbPartie_DbCoup" ed:AssociationGuid="19c0e047-8444-4854-ac5d-6ce9edfe3aa7" Member="DbPartie" ed:Guid="cad0a085-7139-44bb-b1d8-b3736cbdccca" ThisKey="IdPartie" OtherKey="IdPartie" Type="DbPartie" DeleteRule="NO ACTION" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="goban.Joueurs" Member="DbJoueurs">
-    <Type Name="DbJoueur" ed:Guid="4a715f4b-031a-4940-a276-006b7e832104">
-      <Column Name="idJoueur" Member="IdJoueur" Type="System.Int64" AutoSync="OnInsert" DbType="INT(10) UNSIGNED NOT NULL AUTO_INCREMENT" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="True" ed:Guid="7b9e791f-89dd-407e-aac5-0f3f77a3bd8a" />
-      <Column Name="nom" Member="Nom" Type="System.String" DbType="VARCHAR(20) NOT NULL" CanBeNull="false" UpdateCheck="Never" MaxLength="20" ed:ValidateMaxLength="20" ed:ValidateRequired="True" ed:Guid="8c6de50f-020e-44cb-85e4-d5d0d2037e8b" />
-      <Association Name="DbJoueur_DbPartie" ed:AssociationGuid="e03d8424-5954-4e5c-897d-c9dd75cefb6e" Member="DbParties_IdJoueurBlanc" ed:Guid="675044f9-0da3-4f09-96d5-5b5e235c9390" ThisKey="IdJoueur" OtherKey="IdJoueurBlanc" Type="DbPartie" />
-      <Association Name="DbJoueur_DbPartie1" ed:AssociationGuid="590d6e52-deeb-4d8d-81ea-5fa296e0424f" Member="DbParties_IdJoueurNoir" ed:Guid="95c44fed-8195-4a72-8f0c-21b38c3e4c3e" ThisKey="IdJoueur" OtherKey="IdJoueurNoir" Type="DbPartie" />
+  <Table Name="goban.joueurs" Member="DbJoueurs">
+    <Type Name="DbJoueur" ed:Guid="5d936bc3-d819-4a93-9e5c-bf1b52c8c6a1">
+      <Column Name="idJoueur" Member="IdJoueur" Type="System.Int64" AutoSync="OnInsert" DbType="INT(10) UNSIGNED NOT NULL AUTO_INCREMENT" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="True" ed:Guid="d5244e2d-0684-45b1-9127-fa74e301b731" />
+      <Column Name="nom" Member="Nom" Type="System.String" DbType="VARCHAR(20) NOT NULL" CanBeNull="false" UpdateCheck="Never" MaxLength="20" ed:ValidateMaxLength="20" ed:ValidateRequired="True" ed:Guid="ed7ff9de-10e1-4449-8b20-87d35bd1dcf6" />
+      <Association Name="DbJoueur_DbPartie" ed:AssociationGuid="ad10eb61-5c41-4e34-9a99-e0b21c6ac0e7" Member="DbParties_IdJoueurBlanc" ed:Guid="b61e9aef-e9a2-41f6-a5f1-803d52eb3ba9" ThisKey="IdJoueur" OtherKey="IdJoueurBlanc" Type="DbPartie" />
+      <Association Name="DbJoueur_DbPartie1" ed:AssociationGuid="612fbe8f-334c-447a-9159-3e678784923e" Member="DbParties_IdJoueurNoir" ed:Guid="e272f64d-6267-4b1f-ae28-e5ec7b8f6bff" ThisKey="IdJoueur" OtherKey="IdJoueurNoir" Type="DbPartie" />
     </Type>
   </Table>
-  <Table Name="goban.Partie" Member="DbParties">
-    <Type Name="DbPartie" ed:Guid="e3f97881-7445-422c-b8b9-04c9c324491c">
-      <Column Name="idPartie" Member="IdPartie" Type="System.Int64" AutoSync="OnInsert" DbType="INT(10) UNSIGNED NOT NULL AUTO_INCREMENT" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="True" ed:Guid="88004ce3-5c84-444b-ad37-a703edc909ad" />
-      <Column Name="idJoueurNoir" Member="IdJoueurNoir" Type="System.Int64" DbType="INT(10) UNSIGNED NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="10" ed:ValidateRequired="True" ed:Guid="8c5a0f8e-78a6-4da5-8386-30e1bfb3c36b" />
-      <Column Name="idJoueurBlanc" Member="IdJoueurBlanc" Type="System.Int64" DbType="INT(10) UNSIGNED NULL" CanBeNull="true" UpdateCheck="Never" Precision="10" ed:ValidateRequired="False" ed:Guid="c71e6599-1081-4f63-a69c-260bf9d81e4b" />
-      <Column Name="etatPartie" Member="EtatPartie" Type="System.String" DbType="ENUM NULL" CanBeNull="true" UpdateCheck="Never" DefaultValue="'En cours'" ed:ValidateRequired="False" ed:Guid="47b24971-74a5-4330-85b9-7ebae07c0de5" />
-      <Column Name="heureDebut" Member="HeureDebut" Type="System.DateTime" DbType="TIMESTAMP NOT NULL" CanBeNull="false" UpdateCheck="Never" DefaultValue="CURRENT_TIMESTAMP" ed:ValidateRequired="True" ed:Guid="e6604cbf-042a-466e-8776-7339e3b6bdb4" />
-      <Column Name="heureFin" Member="HeureFin" Type="System.DateTime" DbType="TIMESTAMP NULL" CanBeNull="true" UpdateCheck="Never" ed:ValidateRequired="False" ed:Guid="87da0c52-d339-418b-be4f-4942980a5b68" />
-      <Association Name="DbPartie_DbGoban" ed:AssociationGuid="f464c1f8-7b34-440a-a3f2-f54e122ca620" Member="DbGobans" ed:Guid="6c0dbdf4-961a-46f8-87e3-4aa76e0c4db9" ThisKey="IdPartie" OtherKey="IdPartie" Type="DbGoban" />
-      <Association Name="DbJoueur_DbPartie" ed:AssociationGuid="e03d8424-5954-4e5c-897d-c9dd75cefb6e" Member="DbJoueurs_IdJoueurBlanc" ed:Guid="24cf493d-40b2-4238-bdf9-1ca7bab4c508" ThisKey="IdJoueurBlanc" OtherKey="IdJoueur" Type="DbJoueur" DeleteRule="NO ACTION" IsForeignKey="true" />
-      <Association Name="DbJoueur_DbPartie1" ed:AssociationGuid="590d6e52-deeb-4d8d-81ea-5fa296e0424f" Member="DbJoueurs_IdJoueurNoir" ed:Guid="89fee818-6c79-410d-bd98-ac906d82220a" ThisKey="IdJoueurNoir" OtherKey="IdJoueur" Type="DbJoueur" DeleteRule="NO ACTION" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="goban.Pion" Member="DbPions">
-    <Type Name="DbPion" ed:Guid="06a55132-a6a6-40a4-99f0-fa8ae19d3b1b">
-      <Column Name="idPion" Member="IdPion" Type="System.Int64" AutoSync="OnInsert" DbType="INT(10) UNSIGNED NOT NULL AUTO_INCREMENT" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="True" ed:Guid="f7a325bf-4ead-4f02-a335-7a7687e4cebd" />
-      <Column Name="idGoban" Member="IdGoban" Type="System.Int64" DbType="INT(10) UNSIGNED NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="10" ed:ValidateRequired="True" ed:Guid="68a5baf6-6d76-4a20-8a4e-525f30cb1440" />
-      <Column Name="positionX" Member="PositionX" Type="System.Byte" DbType="TINYINT(3) UNSIGNED NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="3" ed:ValidateRequired="True" ed:Guid="741df939-2793-46bb-9fd5-0c82b7edf8ed" />
-      <Column Name="positionY" Member="PositionY" Type="System.Byte" DbType="TINYINT(3) UNSIGNED NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="3" ed:ValidateRequired="True" ed:Guid="ae9c12f2-50f1-41d2-b2cd-102f6a02aeb3" />
-      <Column Name="Pioncol" Type="System.String" DbType="ENUM NULL" CanBeNull="true" UpdateCheck="Never" ed:ValidateRequired="False" ed:Guid="bfed0768-db5d-44aa-b6c9-a85046b2af45" />
-      <Column Name="etatPion" Member="EtatPion" Type="System.String" DbType="ENUM NULL" CanBeNull="true" UpdateCheck="Never" DefaultValue="'Vivant'" ed:ValidateRequired="False" ed:Guid="ab9db0a2-709a-4993-a061-9d58e183759e" />
-      <Column Name="numeroCoup" Member="NumeroCoup" Type="System.Int32" DbType="INT(3) NULL" CanBeNull="true" UpdateCheck="Never" Precision="3" ed:ValidateRequired="False" ed:Guid="e5b31a52-1a71-4043-b6ca-4a6020273af4" />
-      <Column Name="heurePion" Member="HeurePion" Type="System.DateTime" DbType="TIMESTAMP NOT NULL" CanBeNull="false" UpdateCheck="Never" DefaultValue="CURRENT_TIMESTAMP" ed:ValidateRequired="True" ed:Guid="6cd579ab-b74e-4534-97b9-ae0061594e6c" />
-      <Association Name="DbGoban_DbPion" ed:AssociationGuid="5856bc2e-f8de-4120-87bd-370791c887fd" Member="DbGoban" ed:Guid="1358d2a5-4217-4e3d-b604-034a898a66e2" ThisKey="IdGoban" OtherKey="IdGoban" Type="DbGoban" DeleteRule="NO ACTION" IsForeignKey="true" />
+  <Table Name="goban.partie" Member="DbParties">
+    <Type Name="DbPartie" ed:Guid="74d92463-c24a-4f34-9f8d-0fb5e4715a4c">
+      <Column Name="idPartie" Member="IdPartie" Type="System.Int64" AutoSync="OnInsert" DbType="INT(10) UNSIGNED NOT NULL AUTO_INCREMENT" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="True" ed:Guid="399ffd5f-498e-4ca3-99b5-d3ef22de57c0" />
+      <Column Name="idJoueurNoir" Member="IdJoueurNoir" Type="System.Int64" DbType="INT(10) UNSIGNED NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="10" ed:ValidateRequired="True" ed:Guid="7f56d28b-ca89-4ca6-a6d5-15a60a2c64e6" />
+      <Column Name="idJoueurBlanc" Member="IdJoueurBlanc" Type="System.Int64" DbType="INT(10) UNSIGNED NULL" CanBeNull="true" UpdateCheck="Never" Precision="10" ed:ValidateRequired="False" ed:Guid="8f552f0f-8826-49f3-879e-bae6191f4136" />
+      <Column Name="etatPartie" Member="EtatPartie" Type="System.String" DbType="ENUM NULL" CanBeNull="true" UpdateCheck="Never" DefaultValue="'En cours'" ed:ValidateRequired="False" ed:Guid="aba8a69d-431c-411a-b25c-746f2c0f7b12" />
+      <Column Name="heureDebut" Member="HeureDebut" Type="System.DateTime" DbType="TIMESTAMP NOT NULL" CanBeNull="false" UpdateCheck="Never" DefaultValue="CURRENT_TIMESTAMP" ed:ValidateRequired="True" ed:Guid="e5d507c9-a0bb-471e-b775-f35a064d4105" />
+      <Column Name="heureFin" Member="HeureFin" Type="System.DateTime" DbType="TIMESTAMP NULL" CanBeNull="true" UpdateCheck="Never" ed:ValidateRequired="False" ed:Guid="4b8b0d04-2437-4bf5-9556-90cf60280f80" />
+      <Association Name="DbPartie_DbCoup" ed:AssociationGuid="19c0e047-8444-4854-ac5d-6ce9edfe3aa7" Member="DbCoups" ed:Guid="89dff4cd-758a-4238-a54c-41f4cab72a50" ThisKey="IdPartie" OtherKey="IdPartie" Type="DbCoup" />
+      <Association Name="DbJoueur_DbPartie" ed:AssociationGuid="ad10eb61-5c41-4e34-9a99-e0b21c6ac0e7" Member="DbJoueurs_IdJoueurBlanc" ed:Guid="a4ca184f-c233-4993-b7e6-d0b24a22552c" ThisKey="IdJoueurBlanc" OtherKey="IdJoueur" Type="DbJoueur" DeleteRule="NO ACTION" IsForeignKey="true" />
+      <Association Name="DbJoueur_DbPartie1" ed:AssociationGuid="612fbe8f-334c-447a-9159-3e678784923e" Member="DbJoueurs_IdJoueurNoir" ed:Guid="ac87a0a2-42ec-4408-b075-3efbc840022b" ThisKey="IdJoueurNoir" OtherKey="IdJoueur" Type="DbJoueur" DeleteRule="NO ACTION" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

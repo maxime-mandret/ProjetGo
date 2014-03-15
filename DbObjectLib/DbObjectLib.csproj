@@ -62,10 +62,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataContext.lqml</DependentUpon>
     </Compile>
-    <Compile Include="DbGoban.cs" />
+    <Compile Include="DbCoup.cs" />
     <Compile Include="DbJoueur.cs" />
     <Compile Include="DbPartie.cs" />
-    <Compile Include="DbPion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

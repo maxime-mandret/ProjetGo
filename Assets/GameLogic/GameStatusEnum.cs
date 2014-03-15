@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
-namespace DbGobansContext
+namespace Assets.GameLogic
 {
-    public partial class DbPion
+    public enum GameStatusEnum
     {
-           
+        playing, pending, over
     }
 }

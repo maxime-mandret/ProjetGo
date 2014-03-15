@@ -8,7 +8,7 @@
       <Property RemoveUnderscores="True" CodeCase="FirstLetterUppercase" AddPrefix="" AddSuffix="" RemovePrefixes="" RemoveSuffixes="" PluralizationName="Singularize" />
     </DatabaseFirstNamingRules>
     <ModelFirst StorageSynchronizationEnabled="False" TargetSchema="goban">
-      <TargetServer Server="MySQL" ServerVersion="5.5" />
+      <TargetServer Server="MySQL" ServerVersion="5.6" />
       <ModelFirstNamingRules>
         <Table RemoveUnderscores="False" CodeCase="Unchanged" AddPrefix="" AddSuffix="" RemovePrefixes="" RemoveSuffixes="" PluralizationName="Pluralize" />
         <Column RemoveUnderscores="False" CodeCase="Unchanged" AddPrefix="" AddSuffix="" RemovePrefixes="" RemoveSuffixes="" PluralizationName="Unchanged" />

@@ -8,6 +8,43 @@ namespace DbGobansContext
 {
     public partial class DbPartie
     {
+        public DbCoup GetLastCoup ()
+        {
+            DbCoup maxCoup = this.DbCoups.First(c => c.HeureCoup == this.DbCoups.Max(coup => coup.HeureCoup));
+            Debug.WriteLine(string.Format("Last coup (n° {0}) on {{{1},{2}}}", maxCoup.HeureCoup, maxCoup.X, maxCoup.Y));
+            return maxCoup;
+        }
+
+        public DbCoup PoserPion (int x, int y, DbJoueur joueur)
+        {
+            DbCoup coup = new DbCoup
+            {
+                DbPartie = this,
+                HeureCoup = DateTime.Now,
+                IdJoueur = joueur.IdJoueur,
+                X = x,
+                Y = y
+            };
+            this.DbCoups.Add(coup);
+            Debug.WriteLine(string.Format("Inserting pion at {{{0},{1}}} from {2} at {3}", x, y, joueur.Nom, coup.HeureCoup));
+            return coup;
+        }
+
+        public DbCoup PasserTour (DbJoueur joueur)
+        {
+            Debug.WriteLine(string.Format("{0} à passé son tour", joueur.Nom));
+            DbCoup coup = new DbCoup
+            {
+                DbPartie = this,
+                HeureCoup = DateTime.Now,
+                IdJoueur = joueur.IdJoueur,
+                X = null,
+                Y = null
+            };
+
+            return coup;
+        }
+
         public static List<DbPartie> GetAllRunningGames (DbGobansDataContext context)
         {
             var runningGames = context.DbParties.Where(g => g.EtatPartie == "En cours");
