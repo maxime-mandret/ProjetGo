@@ -76,7 +76,7 @@
     <Compile Include="Assets\ObjetsDeJeu\Pattern.cs" />
     <Compile Include="Assets\ObjetsDeJeu\Player.cs" />
     <Compile Include="Assets\ObjetsDeJeu\RandomIaPlayer.cs" />
-    <Compile Include="Assets\ObjetsDeJeu\RemoteMovesStalker.cs" />
+    <Compile Include="Assets\GameLogic\RemoteMovesStalker.cs" />
     <Compile Include="Assets\ObjetsDeJeu\RemotePlayer.cs" />
     <Compile Include="Assets\ObjetsDeJeu\SladIaPlayer.cs" />
     <Compile Include="Assets\PlayerLogic.cs" />

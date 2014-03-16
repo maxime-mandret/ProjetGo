@@ -47,7 +47,7 @@ namespace DbGobansContext
 
         public static List<DbPartie> GetAllRunningGames (DbGobansDataContext context)
         {
-            var runningGames = context.DbParties.Where(g => g.EtatPartie == "En cours");
+            var runningGames = context.DbParties.Where(g => g.EtatPartie == "playing");
             return runningGames.ToList();
         }
 
@@ -75,7 +75,7 @@ namespace DbGobansContext
 
             if (this.DbJoueurs_IdJoueurBlanc != null && this.DbJoueurs_IdJoueurNoir != null)
             {
-                this.EtatPartie = "En cours";
+                this.EtatPartie = "playing";
                 this.HeureDebut = DateTime.Now;
             }
         }

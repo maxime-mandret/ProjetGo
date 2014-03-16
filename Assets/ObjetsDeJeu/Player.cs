@@ -69,5 +69,10 @@ namespace Assets.ObjetsDeJeu
 				return ((Name != null ? Name.GetHashCode() : 0) * 397);// ^ (int) Color;
 			}
 		}
+
+	    public override string ToString()
+	    {
+	        return string.Format("{0} - {0}", Name, Color);
+	    }
 	}
 }

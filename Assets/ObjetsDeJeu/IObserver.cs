@@ -1,4 +1,6 @@
-﻿namespace Assets.ObjetsDeJeu
+﻿using Assets.GameLogic;
+
+namespace Assets.ObjetsDeJeu
 {
     public interface IObserver<T>
     {

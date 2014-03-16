@@ -29,7 +29,7 @@ namespace Assets.GameLogic
 	    public double WhiteScore { get; set; }
 		public double BlackScore { get; set; }
 		
-		public Game(int size, Player whitePlayer, Player blackPlayer)
+		public Game(int size, Player blackPlayer, Player whitePlayer)
 		{
 			this.Goban = new Goban(size);
             this.UIManager = new UnityUiMananger();
@@ -53,7 +53,7 @@ namespace Assets.GameLogic
             }
         }
 		
-		public void PasserTour()
+		public virtual void PasserTour()
 		{
 			this.CurrentPlayer.NbAbandonSuccessifs++;
 			if(_whitePlayer.NbAbandonSuccessifs >= 1 && _blackPlayer.NbAbandonSuccessifs >= 1)
@@ -66,7 +66,7 @@ namespace Assets.GameLogic
 			}
 		}
         
-		public void EndGame()
+		public virtual void EndGame()
 		{
 			_scalc.CalculateFinalScore (this.Goban,true);
 			this.BlackScore = _scalc.BlackFinalScore;
@@ -74,7 +74,7 @@ namespace Assets.GameLogic
 			this.Status = "over";
 		}
 
-		public void Update()
+		public virtual void Update()
 		{
 			if(this.Status == "playing")
 			{
@@ -121,7 +121,7 @@ namespace Assets.GameLogic
 
 		}
 		
-		public void PutRock(int x, int y)
+		public virtual void PutRock(int x, int y)
 		{
 			this.CurrentPlayer.NbAbandonSuccessifs = 0;
 			if(this.Goban.CanPlay(x, y))
@@ -132,7 +132,7 @@ namespace Assets.GameLogic
 			}
 		}
 		
-		protected void ChangeCurrentPlayer()
+		protected virtual void ChangeCurrentPlayer()
 		{
 		    this.CurrentPlayer = this.CurrentPlayer.Equals(WhitePlayer) ? BlackPlayer : WhitePlayer;
 		}
