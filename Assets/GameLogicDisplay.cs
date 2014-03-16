@@ -55,6 +55,18 @@ public class GameLogicDisplay : MonoBehaviour
 			Game = new Game(9, p1, p2);
 
 		}
+		if(PlayerPrefs.GetInt("gameMode") == 0)
+		{
+			//Instancie ta remoteGame, l'id de la partie se trouve dans PlayerPrefs.GetInt("idPartie")
+			
+			
+		}
+		if(PlayerPrefs.GetInt("gameMode") == 1)
+		{
+			//Ici c'est toi qui crée la game et qui attend donc met le statut de la game en "pending"
+			
+			
+		}
 		updateLock = false;
 		downTime = coolTime;
 	}
@@ -75,6 +87,7 @@ public class GameLogicDisplay : MonoBehaviour
 				GameObject.Find("NomBlanc").transform.FindChild("abandons").guiText.text = "Abandons : " + Game.WhitePlayer.NbAbandonSuccessifs;
 				GameObject.Find("NomNoir").transform.FindChild("abandons").guiText.text = "Abandons : " + Game.BlackPlayer.NbAbandonSuccessifs;
 				updateLock = false;
+				GameObject.Find("pending").guiText.enabled = false;
 				downTime = coolTime;
 
 //				DEBUG on liste le nombre d'intersections par groupe
@@ -85,6 +98,20 @@ public class GameLogicDisplay : MonoBehaviour
 //				Debug.Log("--------");
 			}
 		}
+		
+		//TODO statut de pending quand on attend qu'un joueur nous rejoingne
+		if(Game.Status == "pending")
+		{
+			//Afficher un message d'attente
+			GameObject.Find("pending").guiText.enabled = true;	
+		}
+		
+		//TODO statut de pending quand on attend le prochain coup
+		if(Game.Status == "pendingTurn")
+		{
+			//Afficher un message d'attente
+			GameObject.Find("pending").guiText.enabled = true;	
+		}		
 
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;

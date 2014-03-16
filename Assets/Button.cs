@@ -4,6 +4,7 @@ using System.Collections;
 public class Button : MonoBehaviour
 {
 	private Color baseColor;
+	public int idPartie;
 	// Use this for initialization
 	void Start()
 	{
@@ -18,35 +19,50 @@ public class Button : MonoBehaviour
 
 	void OnMouseDown()
 	{
-		if(gameObject.name == "newgame")
+	
+		if(this.gameObject.name == "game")
 		{
-			//Application.LoadLevel ("Goban");
-			Camera.main.GetComponent<MenuClick>().displayNewGameMenu();
+			//Nouvelle partie solo;
+			Camera.main.GetComponent<MenuClick>().joinMultiGame(this.idPartie);
+			
+		}
+		
+		if(this.gameObject.name == "multiplayer")
+		{
+			//On affiche le menu multi
+			Camera.main.GetComponent<MenuClick>().displayMultiplayerMenu();
+			
+		}
+		
+		if(this.gameObject.name == "newMultigame")
+		{
+			//Rejoindr eune artie
+			Camera.main.GetComponent<MenuClick>().createNewMultiplayerGameMenu();
+			
+		}
+		
+		if(this.gameObject.name == "joingame")
+		{
+			//Rejoindre partie
+			Camera.main.GetComponent<MenuClick>().displayJoinMenu();
 			
 		}
 
-		if(gameObject.name == "retour")
+		if(this.gameObject.name == "retour")
 		{
 			//Application.LoadLevel ("Goban");
 			Camera.main.GetComponent<MenuClick>().displayMainMenu();
 			
 		}
-
-		if(gameObject.name == "jvj")
-		{
-			//Application.LoadLevel ("Goban");
-			Camera.main.GetComponent<MenuClick>().jvjGame();
-			
-		}
 		
-		if(gameObject.name == "iavia")
+		if(this.gameObject.name == "iavia")
 		{
 			//Application.LoadLevel ("Goban");
 			Camera.main.GetComponent<MenuClick>().iaviaGame();
 			
 		}
 
-		if(gameObject.name == "exit")
+		if(this.gameObject.name == "exit")
 		{
 			Application.Quit();
 		}
