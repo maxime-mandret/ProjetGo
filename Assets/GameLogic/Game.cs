@@ -127,7 +127,7 @@ namespace Assets.GameLogic
 			if(this.Goban.CanPlay(x, y))
 			{
 				this.Goban.PutRock(CurrentPlayer, x, y);
-			    this.UIManager.PoserPion(CurrentPlayer, x, y);
+                this.UIManager.PoserPion(CurrentPlayer, x, y);
 				this.ChangeCurrentPlayer();
 			}
 		}
