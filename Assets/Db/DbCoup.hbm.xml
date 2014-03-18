@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="Assembly-CSharp-vs.Assets.Db.DbCoup, Assembly-CSharp-vs" table="coup">
+    
+    <id name="IdCoup" column="idCoup" type="int">
+      <generator class="native"></generator>
+    </id>
+    <property name="X" column="x" type="int" />
+    <property name="Y" column="y" type="int" />
+    <property name="HeureCoup" column="heureCoup" type="datetime"/>
+    <property name="IdJoueur" column="idJoueur" type="int"/>
+    <one-to-one class="Assets.Db.DbPartie" foreign-key="idPartie" name="Partie" />
+
+    <!--`
+    idCoup` int(10) NOT NULL AUTO_INCREMENT,
+    `idPartie` int(10) NOT NULL,
+    `heureCoup` datetime NOT NULL,
+    `idJoueur` int(10) unsigned NOT NULL,
+    `x` int(10) DEFAULT NULL,
+    `y` int(10) DEFAULT NULL,-->
+
+  </class>
+</hibernate-mapping>

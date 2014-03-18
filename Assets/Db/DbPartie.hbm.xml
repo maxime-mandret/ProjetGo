@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="Assembly-CSharp-vs.Assets.Db.DbPartie, Assembly-CSharp-vs" table="partie">
+    
+    <id name="IdPartie" column="idPartie" type="int">
+      <generator class="native"></generator>
+    </id>
+
+    <property column="etatPartie" name="EtatPartie" type="string" />
+    <property column="heureDebut" name="HeureDebut" type="datetime" />
+    <property column="heureFin" name="HeureFin" type="datetime" />
+    <one-to-one class="Assets.Db.Joueur" foreign-key="idJoueurBlanc" name="JoueurBlanc" />
+    <one-to-one class="Assets.Db.Joueur" foreign-key="idJoueurNoir" name="JoueurNoir" />
+    <!--test-->
+    <many-to-one class="Assets.Db.Coup" column="idCoup" name="Coups" ></many-to-one>
+    
+    
+    <!--
+    `idPartie` int(10) NOT NULL AUTO_INCREMENT,
+    `idJoueurNoir` int(10) NOT NULL,
+    `idJoueurBlanc` int(10) DEFAULT NULL,
+    `etatPartie` enum('playing','over','pending') DEFAULT 'playing',
+    `heureDebut` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `heureFin` datetime NULL DEFAULT NULL,-->
+
+  </class>
+</hibernate-mapping>

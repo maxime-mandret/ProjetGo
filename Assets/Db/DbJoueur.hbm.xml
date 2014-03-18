@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="Assembly-CSharp-vs.Assets.Db.DbJoueur, Assembly-CSharp-vs" table="joueur">
+    
+    <id name="IdJoueur" column="idJoueur" type="int">
+      <generator class="native"></generator>
+    </id>
+    <property name="Nom" column="nom" type="String"></property>
+
+
+    <!--
+    `idJoueur` int(10) NOT NULL AUTO_INCREMENT,
+    `nom` varchar(20) NOT NULL,-->
+
+  </class>
+</hibernate-mapping>

@@ -11,9 +11,10 @@
     <RootNamespace>
     </RootNamespace>
     <AssemblyName>Assembly-CSharp</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>Assets</BaseDirectory>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,24 +36,27 @@
     <NoWarn>0169</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Devart.Data.Linq, Version=4.4.438.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Devart.Data.Linq.dll</HintPath>
+    <Reference Include="NHibernate">
+      <HintPath>Assets\lib\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Linq">
+      <HintPath>Assets\lib\NHibernate.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.XML" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-      <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+      <HintPath>Assets\lib\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+      <HintPath>Assets\lib\UnityEditor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Button.cs" />
     <Compile Include="Assets\Case.cs" />
+    <Compile Include="Assets\Db\DbCoup.cs" />
+    <Compile Include="Assets\Db\DbJoueur.cs" />
+    <Compile Include="Assets\Db\DbPartie.cs" />
     <Compile Include="Assets\GameLogic\Game.cs" />
     <Compile Include="Assets\ObjetsDeJeu\IObserver.cs" />
     <Compile Include="Assets\GameLogic\RemoteGame.cs" />
@@ -84,6 +88,12 @@
     <Compile Include="Assets\TitleIntro.cs" />
     <Compile Include="Assets\bolspawn.cs" />
     <None Include="app.config" />
+    <None Include="Assets\lib\nhibernate-configuration.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Assets\lib\nhibernate-mapping.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Assets\Standard Assets\Projectors\Guidelines.txt" />
     <None Include="Assets\Standard Assets\Projectors\Sources\Shaders\Projector Multiply.shader" />
     <None Include="Assets\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />
@@ -92,14 +102,25 @@
       <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="DbObjectLib\DbObjectLib.csproj">
-      <Project>{e96184bd-18d7-4207-94df-194768ad6899}</Project>
-      <Name>DbObjectLib</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\DbObjectLib.dll" />
+    <Content Include="Assets\Db\DbPartie.hbm.xml" />
+    <Content Include="Assets\Db\DbCoup.hbm.xml" />
+    <Content Include="Assets\Db\DbJoueur.hbm.xml" />
+    <Content Include="Assets\Db\hibernate.cfg.xml" />
+    <Content Include="Assets\lib\Antlr3.Runtime.dll" />
+    <Content Include="Assets\lib\Iesi.Collections.dll" />
+    <Content Include="Assets\lib\Iesi.Collections.xml" />
+    <Content Include="Assets\lib\log4net.dll" />
+    <Content Include="Assets\lib\log4net.license.txt" />
+    <Content Include="Assets\lib\log4net.xml" />
+    <Content Include="Assets\lib\NHibernate.dll" />
+    <Content Include="Assets\lib\NHibernate.Linq.dll" />
+    <Content Include="Assets\lib\NHibernate.Linq.pdb" />
+    <Content Include="Assets\lib\NHibernate.Linq.xml" />
+    <Content Include="Assets\lib\NHibernate.xml" />
+    <Content Include="Assets\lib\UnityEditor.dll" />
+    <Content Include="Assets\lib\UnityEngine.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

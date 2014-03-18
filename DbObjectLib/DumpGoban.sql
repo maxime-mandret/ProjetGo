@@ -25,32 +25,32 @@ DROP TABLE IF EXISTS `coup`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `coup` (
-  `idCoup` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `idPartie` int(10) unsigned NOT NULL,
+  `idCoup` int(10) NOT NULL AUTO_INCREMENT,
+  `idPartie` int(10) NOT NULL,
   `heureCoup` datetime NOT NULL,
   `idJoueur` int(10) unsigned NOT NULL,
-  `x` int(2) unsigned DEFAULT NULL,
-  `y` int(2) unsigned DEFAULT NULL,
+  `x` int(10) DEFAULT NULL,
+  `y` int(10) DEFAULT NULL,
   PRIMARY KEY (`idCoup`),
   UNIQUE KEY `PK_INDEX` (`idCoup`),
   KEY `idPartie_idx` (`idPartie`),
   CONSTRAINT `FK_idPartie` FOREIGN KEY (`idPartie`) REFERENCES `partie` (`idPartie`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `joueurs`
 --
 
-DROP TABLE IF EXISTS `joueurs`;
+DROP TABLE IF EXISTS `joueur`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `joueurs` (
-  `idJoueur` int(10) unsigned NOT NULL AUTO_INCREMENT,
+CREATE TABLE `joueur` (
+  `idJoueur` int(10) NOT NULL AUTO_INCREMENT,
   `nom` varchar(20) NOT NULL,
   PRIMARY KEY (`idJoueur`),
   UNIQUE KEY `idnew_table_UNIQUE` (`idJoueur`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -61,19 +61,19 @@ DROP TABLE IF EXISTS `partie`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `partie` (
-  `idPartie` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `idJoueurNoir` int(10) unsigned NOT NULL,
-  `idJoueurBlanc` int(10) unsigned DEFAULT NULL,
+  `idPartie` int(10) NOT NULL AUTO_INCREMENT,
+  `idJoueurNoir` int(10) NOT NULL,
+  `idJoueurBlanc` int(10) DEFAULT NULL,
   `etatPartie` enum('playing','over','pending') DEFAULT 'playing',
-  `heureDebut` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `heureFin` timestamp NULL DEFAULT NULL,
+  `heureDebut` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `heureFin` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`idPartie`),
   UNIQUE KEY `idPartie_UNIQUE` (`idPartie`),
   KEY `idJoueurNoir_idx` (`idJoueurNoir`),
   KEY `idJoueurBlanc_idx` (`idJoueurBlanc`),
   CONSTRAINT `idJoueurBlanc` FOREIGN KEY (`idJoueurBlanc`) REFERENCES `joueurs` (`idJoueur`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `idJoueurNoir` FOREIGN KEY (`idJoueurNoir`) REFERENCES `joueurs` (`idJoueur`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
