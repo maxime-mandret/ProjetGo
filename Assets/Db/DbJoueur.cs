@@ -5,7 +5,7 @@ namespace Assets.Db
     public class DbJoueur
     {
         public virtual int Id { get; set; }
-
+        public virtual string Nom { get; set; }
 
 
       //`idJoueur` int(10) NOT NULL AUTO_INCREMENT,

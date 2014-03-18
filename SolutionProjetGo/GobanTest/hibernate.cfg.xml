@@ -1,0 +1,22 @@
+﻿<hibernate-configuration xmlns="urn:nhibernate-configuration-2.2">
+  <!-- an ISessionFactory instance -->
+  <session-factory>
+    <!-- properties -->
+    <property name="connection.provider">
+      NHibernate.Connection.DriverConnectionProvider
+    </property>
+    <property name="connection.driver_class">
+      NHibernate.Driver.MySqlDataDriver
+    </property>
+    <property name="connection.connection_string">
+      Server=127.0.0.1;Database=goban;User ID=root;Password=;
+    </property>
+    <property name="dialect">
+      NHibernate.Dialect.MySQLDialect
+    </property>
+    <!-- mapping files -->
+    <mapping resource="Assembly-CSharp-vs.Assets.Db.DbCoup.hbm.xml" assembly="Assembly-CSharp-vs.Assets" />
+    <mapping resource="Assembly-CSharp-vs.Assets.Db.DbJoueur.hbm.xml" assembly="Assembly-CSharp-vs.Assets" />
+    <mapping resource="Assembly-CSharp-vs.Assets.Db.DbPartie.hbm.xml" assembly="Assembly-CSharp-vs.Assets" />
+  </session-factory>
+</hibernate-configuration>

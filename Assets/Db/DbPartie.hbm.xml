@@ -12,7 +12,7 @@
     <one-to-one class="Assets.Db.Joueur" foreign-key="idJoueurBlanc" name="JoueurBlanc" />
     <one-to-one class="Assets.Db.Joueur" foreign-key="idJoueurNoir" name="JoueurNoir" />
     <!--test-->
-    <many-to-one class="Assets.Db.Coup" column="idCoup" name="Coups" ></many-to-one>
+    <!--<many-to-one class="Assets.Db.Coup" column="idCoup" name="Coups" ></many-to-one>-->
     
     
     <!--
