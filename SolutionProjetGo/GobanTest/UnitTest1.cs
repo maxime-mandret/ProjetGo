@@ -1,13 +1,13 @@
 ﻿using System;
 using Assets.GameLogic;
 using Assets.ObjetsDeJeu;
-using DbGobansContext;
+using Assets.Db;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GobanTest
 {
     [TestClass]
-    public class TestRemoteMoveStalker
+    public class TestRemoteMoveStalker : DbTestClass
     {
         [TestMethod]
         public void TestMethod1 ()
@@ -15,7 +15,18 @@ namespace GobanTest
             Player j1 = new Player("noir", PlayerColor.Black);
             Player j2 = new RemotePlayer("blanc", PlayerColor.White);
 
-            RemoteGame game = new RemoteGame(9, j1, j2);
+            DbPartie p = new DbPartie
+            {
+                DbJoueurs_IdJoueurNoir = DbJoueur.ConnectOrCreatePlayer(j1.Name, this.Context),
+                DbJoueurs_IdJoueurBlanc = DbJoueur.ConnectOrCreatePlayer(j2.Name, this.Context),
+                HeureDebut = DateTime.Now
+            };
+            //Context.DbJoueurs.InsertOnSubmit(j1);
+            //Context.DbJoueurs.InsertOnSubmit(j2);
+            Context.DbParties.InsertOnSubmit(p);
+            Context.SubmitChanges();
+
+            RemoteGame game = new RemoteGame(p);
 
             Assert.AreEqual(game.DbBlackPlayer, game.CurrentDbPlayer);
             Assert.AreEqual(game.BlackPlayer, game.CurrentPlayer);
@@ -29,15 +40,8 @@ namespace GobanTest
             // Insertion en base (sans passer la logique de jeu)
             // Le joueur blanc distant joue
             game.DbPartie.PoserPion(1, 1, game.CurrentDbPlayer);
-            game.ApplicationDataContext.SubmitChanges();
 
             System.Threading.Thread.Sleep(1001);
-
-            // Attente du timeout du stalker
-            //while (game.CurrentPlayer != game.BlackPlayer)
-            //{
-            //    game.Update();
-            //}
 
             
             Assert.AreEqual(game.DbBlackPlayer, game.CurrentDbPlayer);

@@ -23,7 +23,7 @@ namespace Assets.GameUtils
             this._noPlayer = new Player("noplayer", PlayerColor.Black);
 			ui = new UnityUiMananger ();
         }
-		public bool CalculateFinalScore(Goban goban, bool display = false)
+		public bool CalculateFinalScore(Goban goban, bool display)
 		{
 			//On élimine d'abord les groupes morts
 			foreach (Groupe g in goban.Groupes) {

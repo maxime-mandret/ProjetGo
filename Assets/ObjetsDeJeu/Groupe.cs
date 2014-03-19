@@ -48,7 +48,7 @@ namespace Assets.ObjetsDeJeu
 //							}
 //						}
 //					}
-					Debug.Log("x: "+i.Coord.X+" y: "+i.Coord.Y+" libs: "+goban.GetLibertes(i).Count);
+                    //Debug.Log("x: "+i.Coord.X+" y: "+i.Coord.Y+" libs: "+goban.GetLibertes(i).Count);
 				}
 				if(freelibs.Count<2)
 				{
@@ -57,7 +57,7 @@ namespace Assets.ObjetsDeJeu
 				totalibs = freelibs.Count;
 			}
 			
-			Debug.Log("-- groupe "+((alive==true)?"vivant":"mort")+" avec "+totalibs+" libertes");
+            //Debug.Log("-- groupe "+((alive==true)?"vivant":"mort")+" avec "+totalibs+" libertes");
 			return alive;
 		}
 		

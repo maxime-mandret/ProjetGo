@@ -55,6 +55,18 @@ public class GameLogicDisplay : MonoBehaviour
 			Game = new Game(9, p1, p2);
 
 		}
+		if(PlayerPrefs.GetInt("gameMode") == 0)
+		{
+			//Instancie ta remoteGame, l'id de la partie se trouve dans PlayerPrefs.GetInt("idPartie")
+			
+			
+		}
+		if(PlayerPrefs.GetInt("gameMode") == 1)
+		{
+			//Ici c'est toi qui crée la game et qui attend donc met le statut de la game en "pendingPlayer"
+			
+			
+		}
 		updateLock = false;
 		downTime = coolTime;
 	}
@@ -75,6 +87,7 @@ public class GameLogicDisplay : MonoBehaviour
 				GameObject.Find("NomBlanc").transform.FindChild("abandons").guiText.text = "Abandons : " + Game.WhitePlayer.NbAbandonSuccessifs;
 				GameObject.Find("NomNoir").transform.FindChild("abandons").guiText.text = "Abandons : " + Game.BlackPlayer.NbAbandonSuccessifs;
 				updateLock = false;
+				GameObject.Find("pendingPlayer").guiText.enabled = false;
 				downTime = coolTime;
 
 //				DEBUG on liste le nombre d'intersections par groupe
@@ -85,6 +98,20 @@ public class GameLogicDisplay : MonoBehaviour
 //				Debug.Log("--------");
 			}
 		}
+		
+		//TODO statut de pendingPlayer quand on attend qu'un joueur nous rejoingne
+		if(Game.Status == GameStatuts.pendingPlayer)
+		{
+			//Afficher un message d'attente
+			GameObject.Find("pendingPlayer").guiText.enabled = true;	
+		}
+		
+		//TODO statut de pendingPlayer quand on attend le prochain coup
+        if (Game.Status == GameStatuts.pendingTurn)
+        {
+            //Afficher un message d'attente
+            GameObject.Find("pendingPlayer").guiText.enabled = true;
+        }		
 
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;
@@ -102,17 +129,17 @@ public class GameLogicDisplay : MonoBehaviour
 			}
 		}
 
-		if(Game.Status == "over" && !GameObject.Find("GameOver").guiText.enabled)
+		if(Game.Status == GameStatuts.over && !GameObject.Find("GameOver").guiText.enabled)
 		{
 			GameObject.Find("GameOver").guiText.enabled = true;
 			GameObject.Find("lescore").guiText.text = string.Format("Score blanc : {0} - Score noir : {1}",this.Game.WhiteScore,this.Game.BlackScore);
 			GameObject.Find("lescore").guiText.enabled = true;
 		}
 
-		if(Game.Status == "calculated")
+		if(Game.Status == GameStatuts.calculated)
 		{
 			//GameObject.Find("GameOver").guiText.enabled = true;
-			Debug.Log(string.Format("score blanc : {0} score noir : {1}",Game.WhiteScore,Game.BlackScore));
+            //Debug.Log(string.Format("score blanc : {0} score noir : {1}",Game.WhiteScore,Game.BlackScore));
 		}
 
 

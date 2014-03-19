@@ -58,12 +58,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\DbObjectLib\DbObjectLib.csproj">
-      <Project>{e96184bd-18d7-4207-94df-194768ad6899}</Project>
-      <Name>DbObjectLib</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <Choose>

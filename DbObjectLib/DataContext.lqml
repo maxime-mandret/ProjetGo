@@ -7,8 +7,8 @@
       <Column Name="idPartie" Member="IdPartie" Type="System.Int64" DbType="INT(10) UNSIGNED NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="10" ed:ValidateRequired="True" ed:Guid="abe0e188-4fa3-489f-a193-6c60103015a9" />
       <Column Name="heureCoup" Member="HeureCoup" Type="System.DateTime" DbType="DATETIME NOT NULL" CanBeNull="false" UpdateCheck="Never" ed:ValidateRequired="True" ed:Guid="b01e788d-19ff-4018-9641-140db57c95f9" />
       <Column Name="idJoueur" Member="IdJoueur" Type="System.Int64" DbType="INT(10) UNSIGNED NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="10" ed:ValidateRequired="True" ed:Guid="32a8651a-ec2e-4852-b801-3c68cf7739c6" />
-      <Column Name="x" Member="X" Type="System.Int64" DbType="INT(2) UNSIGNED NULL" CanBeNull="true" UpdateCheck="Never" Precision="2" ed:ValidateRequired="False" ed:Guid="ddbf7dd9-e387-431a-94ae-a10db30b208e" />
-      <Column Name="y" Member="Y" Type="System.Int64" DbType="INT(2) UNSIGNED NULL" CanBeNull="true" UpdateCheck="Never" Precision="2" ed:ValidateRequired="False" ed:Guid="f8f0c2f3-2c99-48c2-939a-c91d32f38475" />
+      <Column Name="x" Member="X" Type="System.Int32" DbType="INT(2) NULL" CanBeNull="true" UpdateCheck="Never" Precision="2" ed:ValidateRequired="False" ed:Guid="ddbf7dd9-e387-431a-94ae-a10db30b208e" />
+      <Column Name="y" Member="Y" Type="System.Int32" DbType="INT(2) NULL" CanBeNull="true" UpdateCheck="Never" Precision="2" ed:ValidateRequired="False" ed:Guid="f8f0c2f3-2c99-48c2-939a-c91d32f38475" />
       <Association Name="DbPartie_DbCoup" ed:AssociationGuid="19c0e047-8444-4854-ac5d-6ce9edfe3aa7" Member="DbPartie" ed:Guid="cad0a085-7139-44bb-b1d8-b3736cbdccca" ThisKey="IdPartie" OtherKey="IdPartie" Type="DbPartie" DeleteRule="NO ACTION" IsForeignKey="true" />
     </Type>
   </Table>
@@ -25,7 +25,7 @@
       <Column Name="idPartie" Member="IdPartie" Type="System.Int64" AutoSync="OnInsert" DbType="INT(10) UNSIGNED NOT NULL AUTO_INCREMENT" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="True" ed:Guid="399ffd5f-498e-4ca3-99b5-d3ef22de57c0" />
       <Column Name="idJoueurNoir" Member="IdJoueurNoir" Type="System.Int64" DbType="INT(10) UNSIGNED NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="10" ed:ValidateRequired="True" ed:Guid="7f56d28b-ca89-4ca6-a6d5-15a60a2c64e6" />
       <Column Name="idJoueurBlanc" Member="IdJoueurBlanc" Type="System.Int64" DbType="INT(10) UNSIGNED NULL" CanBeNull="true" UpdateCheck="Never" Precision="10" ed:ValidateRequired="False" ed:Guid="8f552f0f-8826-49f3-879e-bae6191f4136" />
-      <Column Name="etatPartie" Member="EtatPartie" Type="System.String" DbType="ENUM NULL" CanBeNull="true" UpdateCheck="Never" DefaultValue="'En cours'" ed:ValidateRequired="False" ed:Guid="aba8a69d-431c-411a-b25c-746f2c0f7b12" />
+      <Column Name="etatPartie" Member="EtatPartie" Type="System.String" DbType="ENUM NULL" CanBeNull="true" UpdateCheck="Never" DefaultValue="'playing'" ed:ValidateRequired="False" ed:Guid="aba8a69d-431c-411a-b25c-746f2c0f7b12" />
       <Column Name="heureDebut" Member="HeureDebut" Type="System.DateTime" DbType="TIMESTAMP NOT NULL" CanBeNull="false" UpdateCheck="Never" DefaultValue="CURRENT_TIMESTAMP" ed:ValidateRequired="True" ed:Guid="e5d507c9-a0bb-471e-b775-f35a064d4105" />
       <Column Name="heureFin" Member="HeureFin" Type="System.DateTime" DbType="TIMESTAMP NULL" CanBeNull="true" UpdateCheck="Never" ed:ValidateRequired="False" ed:Guid="4b8b0d04-2437-4bf5-9556-90cf60280f80" />
       <Association Name="DbPartie_DbCoup" ed:AssociationGuid="19c0e047-8444-4854-ac5d-6ce9edfe3aa7" Member="DbCoups" ed:Guid="89dff4cd-758a-4238-a54c-41f4cab72a50" ThisKey="IdPartie" OtherKey="IdPartie" Type="DbCoup" />

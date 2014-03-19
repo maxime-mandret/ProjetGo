@@ -54,7 +54,7 @@ namespace GoabanTest
             partie.AddPlayer(j2);
             Assert.AreEqual(j1, partie.DbJoueurs_IdJoueurNoir);
             Assert.AreEqual(j2, partie.DbJoueurs_IdJoueurBlanc);
-            Assert.AreEqual("En cours", partie.EtatPartie);
+            Assert.AreEqual("playing", partie.EtatPartie);
             try
             {
                 partie.AddPlayer(j1);

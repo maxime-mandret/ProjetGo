@@ -37,6 +37,11 @@
   <ItemGroup>
     <Reference Include="Devart.Data.Linq, Version=4.4.438.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -51,6 +56,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="DbPartieTest.cs" />
+    <Compile Include="DbPlayerTest.cs" />
+    <Compile Include="DbTestClass.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -58,10 +66,6 @@
     <ProjectReference Include="..\..\Assembly-CSharp-vs.csproj">
       <Project>{77948430-1d0b-ec1b-f486-f45874eab710}</Project>
       <Name>Assembly-CSharp-vs</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\DbObjectLib\DbObjectLib.csproj">
-      <Project>{e96184bd-18d7-4207-94df-194768ad6899}</Project>
-      <Name>DbObjectLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

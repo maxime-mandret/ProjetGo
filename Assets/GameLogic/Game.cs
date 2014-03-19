@@ -1,9 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Assets.GameUtils;
 using Assets.GameUtils.Sgf;
 using Assets.ObjetsDeJeu;
-using DbGobansContext;
+
 
 namespace Assets.GameLogic
 {
@@ -22,7 +21,7 @@ namespace Assets.GameLogic
 		protected Player _currPlayer;
 		protected Goban _goban;
         public int NbTour { get; set; }
-        public string Status { get; set; }
+        public GameStatuts Status { get; set; }
         protected IUiManager UIManager;
 		protected ScoreCalculator _scalc;
 	    
@@ -36,7 +35,7 @@ namespace Assets.GameLogic
 			this.WhitePlayer = whitePlayer;
 			this.BlackPlayer = blackPlayer;
 			this.CurrentPlayer = BlackPlayer;
-			this.Status = "playing";
+			this.Status = GameStatuts.playing;
 			_scalc = new ScoreCalculator (_whitePlayer,_blackPlayer);
 		}
 
@@ -71,12 +70,12 @@ namespace Assets.GameLogic
 			_scalc.CalculateFinalScore (this.Goban,true);
 			this.BlackScore = _scalc.BlackFinalScore;
 			this.WhiteScore = _scalc.WhiteFinalScore;
-			this.Status = "over";
+			this.Status = GameStatuts.over;
 		}
 
 		public virtual void Update()
 		{
-			if(this.Status == "playing")
+			if(this.Status == GameStatuts.playing)
 			{
 
 				var randomPlayer = CurrentPlayer as RandomIaPlayer;
@@ -127,7 +126,7 @@ namespace Assets.GameLogic
 			if(this.Goban.CanPlay(x, y))
 			{
 				this.Goban.PutRock(CurrentPlayer, x, y);
-                this.UIManager.PoserPion(CurrentPlayer, x, y);
+                //this.UIManager.PoserPion(CurrentPlayer, x, y);
 				this.ChangeCurrentPlayer();
 			}
 		}
@@ -149,7 +148,7 @@ namespace Assets.GameLogic
 		
 		public Player WhitePlayer {
 			get { return _whitePlayer; }
-			private set { _whitePlayer = value; }
+		    set { _whitePlayer = value; }
 		}
 		
 		public Player CurrentPlayer {

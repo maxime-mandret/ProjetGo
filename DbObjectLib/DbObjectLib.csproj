@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\lib\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -52,12 +52,11 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataContext.Designer.cs">
+    <Compile Include="DataContext1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataContext.lqml</DependentUpon>
@@ -77,7 +76,7 @@
     </None>
     <None Include="DataContext.lqml">
       <Generator>DevartLinqToSqlGenerator</Generator>
-      <LastGenOutput>DataContext.Designer.cs</LastGenOutput>
+      <LastGenOutput>DataContext1.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

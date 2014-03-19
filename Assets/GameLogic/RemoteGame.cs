@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
-using Assets.GameUtils;
-using Assets.GameUtils.Sgf;
 using Assets.ObjetsDeJeu;
-using DbGobansContext;
-using UnityEngine;
+using Assets.Db;
 using Debug = System.Diagnostics.Debug;
 
 namespace Assets.GameLogic
 {
-    public class RemoteGame : Game, IDisposable, IObserver<RemoteMovesStalker>
+    public class RemoteGame : Game, IDisposable, IObserver<RemoteMovesStalker>, IObserver<RemotePlayerStalker>
     {
         public DbGobansDataContext ApplicationDataContext { get; set; }
 
@@ -36,62 +33,55 @@ namespace Assets.GameLogic
 
         private EventWaitHandle remotePlayerPlayed = new EventWaitHandle(false, EventResetMode.AutoReset);
         private RemoteMovesStalker moveStalker;
+        private RemotePlayerStalker playerStalker;
 
         private DbPartie _dbPartie;
         private DbJoueur _dbWhitePlayer;
         private DbJoueur _dbBlackPlayer;
 
         // Creation Partie
-        public RemoteGame (int size, Player blackPlayer, Player whitePlayer = null)
-            : base(size, blackPlayer, whitePlayer)
+        public RemoteGame (int size)
+            : base(size, new SladIaPlayer("Duck My Sick", PlayerColor.Black), null)
         {
             this.ApplicationDataContext = new DbGobansDataContext();
 
-            this.DbBlackPlayer = DbJoueur.ConnectOrCreatePlayer(blackPlayer.Name, ApplicationDataContext);
+            this.DbBlackPlayer = DbJoueur.ConnectOrCreatePlayer(this.BlackPlayer.Name, ApplicationDataContext);
             this.CurrentDbPlayer = DbBlackPlayer;
-            this.DbPartie = new DbPartie { DbJoueurs_IdJoueurNoir = this.DbBlackPlayer, HeureDebut = DateTime.Now };
-            // Création en base
-            if (whitePlayer != null)
-            {
-                this.DbWhitePlayer = DbJoueur.ConnectOrCreatePlayer(whitePlayer.Name, ApplicationDataContext);
-                this.DbPartie.DbJoueurs_IdJoueurBlanc = this.DbWhitePlayer;
-                //this.Status = "playing";
-                DbPartie.EtatPartie = "playing";
-            }
-            else
-            {
-                this.Status = "pending";
-                DbPartie.EtatPartie = "pending";
-            }
+            this.DbPartie = new DbPartie { DbJoueurs_IdJoueurNoir = this.DbBlackPlayer, DbJoueurs_IdJoueurBlanc =  null, HeureDebut = DateTime.Now };
+            DbPartie.EtatPartie = GameStatuts.pendingPlayer.ToString();
 
             this.ApplicationDataContext.DbParties.InsertOnSubmit(this.DbPartie);
 
             this.ApplicationDataContext.SubmitChanges();
             this.moveStalker = new RemoteMovesStalker(this);
             this.moveStalker.Observers.Add(this);
+
+            this.playerStalker = new RemotePlayerStalker(this);
+            this.playerStalker.Observers.Add(this);
         }
 
-        //Rejoindre déjà commencée
+        //Rejoindre en attente
         public RemoteGame (DbPartie partie)
-            : base(9, ToLocalPlayerModel(partie.DbJoueurs_IdJoueurBlanc, PlayerColor.White), ToLocalPlayerModel(partie.DbJoueurs_IdJoueurNoir, PlayerColor.Black))
+            : base(
+            9,
+            partie.DbJoueurs_IdJoueurNoir == null ? (Player)new SladIaPlayer("Duck My Sick", PlayerColor.Black) : new RemotePlayer(partie.DbJoueurs_IdJoueurNoir.Nom, PlayerColor.Black),
+            partie.DbJoueurs_IdJoueurBlanc == null ? (Player)new SladIaPlayer("Duck My Sick", PlayerColor.White) : new RemotePlayer(partie.DbJoueurs_IdJoueurBlanc.Nom, PlayerColor.White))
         {
             this.ApplicationDataContext = new DbGobansDataContext();
-            this.DbPartie = partie;
-            this.DbBlackPlayer = partie.DbJoueurs_IdJoueurNoir;
-            this.DbWhitePlayer = partie.DbJoueurs_IdJoueurBlanc;
-
+            this.DbPartie = this.ApplicationDataContext.DbParties.First(part => part.IdPartie == partie.IdPartie);
+            
+            this.DbBlackPlayer = DbJoueur.ConnectOrCreatePlayer(this.BlackPlayer.Name, ApplicationDataContext);
+            this.DbWhitePlayer = DbJoueur.ConnectOrCreatePlayer(this.WhitePlayer.Name, ApplicationDataContext);
+            this.SynchCurrentPlayer();
             // Récupération des coups
             foreach (DbCoup dbCoup in this.DbPartie.DbCoups.OrderBy(p => p.HeureCoup))
             {
                 // Méthode classe mère car on ne sauvegarde pas le mouvement (vu qu'il existe deja)
                 if (dbCoup.X.HasValue && dbCoup.Y.HasValue)
                 {
-                    //var player = dbCoup.IdJoueur == dbCoup.DbPartie.IdJoueurBlanc
-                    //    ? this.WhitePlayer
-                    //    : this.BlackPlayer;
-
-                    //this.UIManager.PoserPion(player, (int)dbCoup.X.Value, (int)dbCoup.Y);
+                    // On apelle la méhode mere pour le pas inserer en base les coups qui y sont déjà
                     base.PutRock((int)dbCoup.X.Value, (int)dbCoup.Y);
+                    this.SynchCurrentPlayer();
                 }
                 else
                 {
@@ -104,9 +94,9 @@ namespace Assets.GameLogic
             moveStalker.Observers.Add(this);
         }
 
-        private static Player ToLocalPlayerModel (DbJoueur dbJoueur, PlayerColor playerColor)
+        private void SynchCurrentPlayer ()
         {
-            return new Player(dbJoueur.Nom, playerColor);
+            this.CurrentDbPlayer = this.CurrentPlayer == this.WhitePlayer ? this.DbWhitePlayer: this.DbBlackPlayer;
         }
 
         public new void EndGame ()
@@ -115,7 +105,7 @@ namespace Assets.GameLogic
             this.DbPartie.EtatPartie = "over";
             //using (DbGobansDataContext context = ApplicationDataContext)
             //{
-            this.DbPartie.EtatPartie = "over";
+            this.DbPartie.HeureFin = DateTime.Now;
             ApplicationDataContext.SubmitChanges();
             //}
             this.ApplicationDataContext.Dispose();
@@ -130,7 +120,7 @@ namespace Assets.GameLogic
             this.DbPartie.PoserPion(x, y, this.CurrentDbPlayer);
             ApplicationDataContext.SubmitChanges();
 
-            this.CurrentDbPlayer = CurrentDbPlayer == DbBlackPlayer ? DbWhitePlayer : DbBlackPlayer;
+            this.SynchCurrentPlayer();
 
             
             //}
@@ -145,13 +135,14 @@ namespace Assets.GameLogic
             this.DbPartie.PasserTour(this.CurrentDbPlayer);
             ApplicationDataContext.SubmitChanges();
 
-            this.CurrentDbPlayer = CurrentDbPlayer == DbBlackPlayer ? DbWhitePlayer : DbBlackPlayer;
+            this.SynchCurrentPlayer();
             //}
         }
 
         public new void Update ()
         {
             base.Update();
+            
         }
 
         #region IDisposable Membres
@@ -172,8 +163,8 @@ namespace Assets.GameLogic
             // Jouer le coup sur l'interface
             if (lastCoup.X.HasValue && lastCoup.Y.HasValue)
             {
-                base.PutRock((int)lastCoup.X.Value, (int)lastCoup.Y);
-                this.CurrentDbPlayer = CurrentDbPlayer == DbBlackPlayer ? DbWhitePlayer : DbBlackPlayer;
+                base.PutRock(lastCoup.X.Value, lastCoup.Y.Value);
+                this.SynchCurrentPlayer();
             }
             else
             {
@@ -183,6 +174,15 @@ namespace Assets.GameLogic
 
         #endregion
 
-        
+        #region IObserver<RemotePlayerStalker> Membres
+
+        public void ObservedNotified (RemotePlayerStalker observed)
+        {
+            this.WhitePlayer = new RemotePlayer(observed.WaitedPlyer.Nom, PlayerColor.White);
+            this.DbWhitePlayer = observed.WaitedPlyer;
+            this.Status = GameStatuts.playing;
+        }
+
+        #endregion
     }
 }
